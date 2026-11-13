@@ -1,0 +1,166 @@
+% Proposition 5 (global signal regression near the bifurcation) and its proof.
+% Numerical check: src/prop5_check.py
+% Notation: L symmetric Laplacian of a connected weighted graph, eigenpairs
+% 0 = lambda_1 < lambda_2 <= ... <= lambda_N, u_1 = N^{-1/2} 1; P = N^{-1} 1 1^T;
+% L^+ Moore--Penrose pseudoinverse; corr(S) = D_S^{-1/2} S D_S^{-1/2}.
+
+\subsection{Global signal regression}\label{sec:gsr}
+
+Let $x$ be a centred Gaussian vector with covariance $S$ and let $F=\operatorname{corr}(S)$ be its
+correlation matrix, the functional connectivity. Global signal regression (GSR) standardises each
+coordinate, $z=D_S^{-1/2}x$, regresses $z$ on the global signal $g=N^{-1}\mathbf 1^{\top}z$, and
+returns the correlation matrix of the residuals. In terms of $F$,
+\begin{equation}\label{eq:gsr}
+  \operatorname{GSR}(F)=\operatorname{corr}\Bigl(F-\frac{F\mathbf 1\mathbf 1^{\top}F}{\mathbf 1^{\top}F\mathbf 1}\Bigr).
+\end{equation}
+Since $\operatorname{corr}$ is invariant under $S\mapsto ESE$ for positive diagonal $E$, we also have
+\begin{equation}\label{eq:gsr-S}
+  \operatorname{GSR}(F)=\operatorname{corr}(Q),\qquad
+  Q=S-\frac{Sww^{\top}S}{w^{\top}Sw},
+\end{equation}
+with $w=D_S^{-1/2}\mathbf 1$.
+Here $Q$ is the covariance of $x$ after regression on the weighted average $w^{\top}x$.
+
+For the diffusive model with homogeneous ratio $\theta=|a|/G$ and symmetric coupling, the
+zero-lag covariance of the real parts is, up to a positive factor,
+\begin{equation}\label{eq:S-theta}
+  S(\theta)=(\theta I+L)^{-1}=\frac1\theta\,P+R(\theta),\qquad
+  R(\theta)=\sum_{k\ge2}\frac{u_ku_k^{\top}}{\theta+\lambda_k},
+\end{equation}
+so that $R(\theta)\mathbf 1=0$ and $R(0)=L^{+}$. The critical mode is $\mathbf 1$ and its variance
+$1/\theta$ diverges at the bifurcation. We write
+$\Omega_{ij}=L^{+}_{ii}+L^{+}_{jj}-2L^{+}_{ij}$ for the effective resistance between nodes $i$ and $j$~\cite{Klein1993},
+$\ell=\operatorname{diag}(L^{+})$ and $h=L^{+}\ell$.
+
+\begin{proposition}[GSR near the bifurcation]\label{prop:gsr}
+Let $L$ be the Laplacian of a connected weighted graph on $N$ nodes, let $F(\theta)=\operatorname{corr}S(\theta)$
+with $S(\theta)$ as in \eqref{eq:S-theta}, and let $G(\theta)=\operatorname{GSR}(F(\theta))$. Then
+$F$ and $G$ extend to real-analytic functions of $\theta$ on a neighbourhood of $\theta=0$, and as
+$\theta\downarrow0$:
+\begin{enumerate}
+  \item[(a)] $F(\theta)=\mathbf 1\mathbf 1^{\top}-\dfrac{N\theta}{2}\,\Omega+O(\theta^{2})$;
+  \item[(b)] $G(\theta)=\operatorname{corr}(L^{+})+\theta\,G_1+O(\theta^{2})$, where
+  $G_1=\mathrm d\operatorname{corr}_{L^{+}}\bigl[-(L^{+})^{2}+\tfrac12(\mathbf 1h^{\top}+h\mathbf 1^{\top})\bigr]$;
+  \item[(c)] consequently
+  \[
+    \lim_{\theta\downarrow0}
+    \frac{\|\partial_{\log\theta}G\|}{\|\partial_{\log\theta}F\|}
+    =\rho_\infty(L):=\frac{2\,\|G_1\|}{N\,\|\Omega\|},
+  \]
+  for any norm on the off-diagonal entries.
+\end{enumerate}
+Moreover, if a global component independent of $x$ is added, $S_\sigma=S+\sigma^{2}\mathbf 1\mathbf 1^{\top}$,
+then
+\begin{enumerate}
+  \item[(d)] $\operatorname{corr}S_\sigma(\theta)=F(\theta_{\mathrm{eff}})+O(\theta\,\theta_{\mathrm{eff}})$ with
+  $\theta_{\mathrm{eff}}^{-1}=\theta^{-1}+N\sigma^{2}$; and
+  $\operatorname{GSR}(\operatorname{corr}S_\sigma(\theta))=\operatorname{corr}(L^{+})+O(\theta)$.
+\end{enumerate}
+\end{proposition}
+
+In words, before GSR the only first-order trace of $\theta$ in $F$ is the global level
+$\mathbf 1\mathbf 1^{\top}-F$. That level is proportional to a fixed matrix $\Omega$, and by (d) it
+cannot be distinguished from the amplitude of an unrelated global component with uniform loading.
+GSR removes that component together with the information. The limit $\operatorname{corr}(L^{+})$ does not depend on
+$\theta$, and the residual sensitivity is reduced by the factor $\rho_\infty(L)$.
+
+\begin{proof}
+\emph{Analyticity.} Set $\varepsilon=N\theta$ and $T(\theta)=\theta S(\theta)=P+\theta R(\theta)$. Each
+$\theta\mapsto(\theta+\lambda_k)^{-1}$ with $k\ge2$ is analytic on $|\theta|<\lambda_2$, so $T$ is
+analytic there and $T(0)=P$ has diagonal $1/N>0$. The map $\operatorname{corr}$ is analytic on
+symmetric matrices with positive diagonal and satisfies $\operatorname{corr}(cS)=\operatorname{corr}(S)$
+for $c>0$. Hence $F=\operatorname{corr}T$ is analytic near $0$. For $G$, note that $w$ in \eqref{eq:gsr-S} may be
+replaced by $\operatorname{diag}(T)^{-1/2}\mathbf 1$, which is analytic. Then
+$\theta Q=T-Tww^{\top}T/(w^{\top}Tw)$ is analytic, since $w^{\top}Tw\to N^{2}>0$ at $\theta=0$. It
+vanishes at $\theta=0$, because $T(0)=P$ and $w(0)\propto\mathbf 1$ give $P-P=0$. Hence
+$Q=(\theta Q)/\theta$ is analytic. By the expansion below,
+$\operatorname{diag}Q(0)=\operatorname{diag}L^{+}$, which is positive because the graph is connected. So $G=\operatorname{corr}Q$ is analytic near $0$.
+
+\emph{(a).} Since $P_{ij}=1/N$,
+\begin{align*}
+  F_{ij}&=\frac{1+\varepsilon R_{ij}}{\sqrt{(1+\varepsilon R_{ii})(1+\varepsilon R_{jj})}}\\
+  &=1+\varepsilon\Bigl(R_{ij}-\tfrac12R_{ii}-\tfrac12R_{jj}\Bigr)+O(\varepsilon^{2}),
+\end{align*}
+and $R(\theta)=L^{+}+O(\theta)$.
+
+\emph{(b).} By scale invariance we may replace $w$ in \eqref{eq:gsr-S} by
+$\tilde w=w/w_1$. Since $S_{ii}=N^{-1}\theta^{-1}(1+\varepsilon R_{ii})$,
+\[
+  \tilde w=\mathbf 1+\varepsilon e,\qquad e=-\tfrac12\ell+O(\varepsilon)-c\,\mathbf 1,
+\]
+where the constant $c$ accounts for the normalisation by $w_1$. A multiple of $\mathbf 1$ in $e$
+plays no role below, because $R\mathbf 1=0$ and $P\mathbf 1=\mathbf 1$. Write $\bar e=N^{-1}\mathbf 1^{\top}e$.
+Using $P\tilde w=(1+\varepsilon\bar e)\mathbf 1$ and $R\tilde w=\varepsilon Re$,
+\begin{gather*}
+  S\tilde w=\alpha\mathbf 1+\varepsilon Re,\qquad
+  \alpha=\frac{N(1+\varepsilon\bar e)}{\varepsilon},\\
+  \tilde w^{\top}S\tilde w=\alpha^{2}\varepsilon+\varepsilon^{2}e^{\top}Re,
+\end{gather*}
+where we used $\mathbf 1^{\top}Re=0$. Therefore
+\begin{align*}
+  \frac{S\tilde w\tilde w^{\top}S}{\tilde w^{\top}S\tilde w}
+  &=\frac{\mathbf 1\mathbf 1^{\top}}{\varepsilon}\bigl(1+O(\varepsilon^{3})\bigr)\\
+  &\quad+\frac{\mathbf 1(Re)^{\top}+(Re)\mathbf 1^{\top}}{\alpha}+O(\varepsilon^{3}),
+\end{align*}
+because $\varepsilon e^{\top}Re/\alpha^{2}=O(\varepsilon^{3})$ and
+$\varepsilon^{2}Ree^{\top}R/(\alpha^{2}\varepsilon)=O(\varepsilon^{3})$. Since
+$\theta^{-1}P=\varepsilon^{-1}\mathbf 1\mathbf 1^{\top}$, the singular parts cancel. With
+$1/\alpha=\varepsilon/N+O(\varepsilon^{2})$ and $Re=-\tfrac12L^{+}\ell+O(\varepsilon)=-\tfrac12h+O(\varepsilon)$
+this gives
+\begin{align*}
+  Q(\theta)&=R(\theta)+\frac{\theta}{2}\bigl(\mathbf 1h^{\top}+h\mathbf 1^{\top}\bigr)+O(\theta^{2})\\
+  &=L^{+}+\theta\Bigl[-(L^{+})^{2}+\tfrac12\bigl(\mathbf 1h^{\top}+h\mathbf 1^{\top}\bigr)\Bigr]+O(\theta^{2}),
+\end{align*}
+using $R'(0)=-\sum_{k\ge2}\lambda_k^{-2}u_ku_k^{\top}=-(L^{+})^{2}$. Applying $\operatorname{corr}$, which is
+differentiable at $L^{+}$, gives (b).
+
+\emph{(c).} By analyticity the expansions may be differentiated term by term:
+$\partial_{\log\theta}F=\theta\,\partial_\theta F=-\tfrac{N\theta}{2}\Omega+O(\theta^{2})$ and
+$\partial_{\log\theta}G=\theta G_1+O(\theta^{2})$. The common factor $\theta$ cancels in the
+quotient. Note that $\Omega_{ij}>0$ for $i\neq j$, so the denominator does not vanish.
+
+\emph{(d).} $S_\sigma=(\theta^{-1}+N\sigma^{2})P+R(\theta)=\theta_{\mathrm{eff}}^{-1}P+R(\theta)$. The
+computation in (a), with $\varepsilon$ replaced by $N\theta_{\mathrm{eff}}$, gives
+$\operatorname{corr}S_\sigma=\mathbf 1\mathbf 1^{\top}-\tfrac{N\theta_{\mathrm{eff}}}{2}\Omega(R(\theta))+O(\theta_{\mathrm{eff}}^{2})$.
+Here $\Omega(R(\theta))=\Omega+O(\theta)$, and comparison with (a) at $\theta_{\mathrm{eff}}$ yields the
+first claim. The computation in (b) uses only the decomposition
+$S=(\text{scalar})\cdot P+R(\theta)$ with a scalar of order $\theta^{-1}$ or larger, so it applies verbatim
+and gives the second claim.
+\end{proof}
+
+\begin{remark}[Non-uniform loading]\label{rem:loading}
+Part (d) concerns a component with uniform spatial loading, independent of $x$. Empirical global
+signals have spatially structured loadings. For a component $\sigma\xi\ell$ with a general loading
+vector $\ell$, write $\ell=\bar\ell\,\mathbf 1+\ell_\perp$ with $\mathbf 1^{\top}\ell_\perp=0$. Then
+\begin{multline*}
+  S+\sigma^{2}\ell\ell^{\top}=\bigl(\theta^{-1}+N\sigma^{2}\bar\ell^{2}\bigr)P+R(\theta)\\
+  +\sigma^{2}\bigl(\bar\ell\,\mathbf 1\ell_\perp^{\top}+\bar\ell\,\ell_\perp\mathbf 1^{\top}+\ell_\perp\ell_\perp^{\top}\bigr).
+\end{multline*}
+The uniform part is absorbed exactly into an effective $\theta$, as in (d). The remaining terms are
+not, and they leave a trace in FC that can in principle distinguish the component from a change of
+$\theta$. The confound is therefore exact for the projection of the loading on $\mathbf 1$ and partial
+otherwise, and its strength is governed by the ratio $\|\ell_\perp\|/(\sqrt N\,|\bar\ell|)$. Whether
+the physiological global components of resting-state fMRI are close enough to uniform for the
+confound to be practically binding is an empirical question that this analysis does not settle.
+\end{remark}
+
+\begin{remark}[Band-passed signals]\label{rem:gsr-filter}
+For a band-pass filter $H$ and a common oscillation frequency $\omega$, the filtered zero-lag
+covariance has the same eigenvectors:
+$S(\theta)=\sum_k\varphi(\theta+\lambda_k)\,u_ku_k^{\top}$ with
+$\varphi(\mu)=\int|H(f)|^{4}\,\Phi_{\mu,\omega}(f)\,\mathrm df$, where $\Phi_{\mu,\omega}$ is the spectrum
+of a scalar complex Ornstein--Uhlenbeck process with damping $\mu$ and frequency $\omega$. If
+$\omega$ lies in the pass band, then $\varphi(\mu)\sim c/\mu$ as $\mu\downarrow0$ and the proof goes
+through with $\theta^{-1}$ replaced by $\varphi(\theta)$ and $L^{+}$ replaced by
+$R_\varphi=\sum_{k\ge2}\varphi(\lambda_k)u_ku_k^{\top}$. If instead the filter removes the critical
+frequency (for example $\omega=0$ with a high-pass cut), $\varphi(0)<\infty$: the critical mode does not
+dominate the filtered covariance, and FC is insensitive to the bifurcation for a different reason.
+\end{remark}
+
+\begin{remark}[Size of $\rho_\infty$]\label{rem:rho}
+For the group structural connectome (Schaefer-100, $N=100$), $\rho_\infty=0.0051$. Over the 200
+individual connectomes the median is $0.0059$ and the range is $0.0041$--$0.0106$. Near the bifurcation,
+GSR therefore removes between $98.9\%$ and $99.6\%$ of the first-order sensitivity of FC to $\theta$. At $\theta=0.01$ the finite-$\theta$ ratio
+is $0.013$. On Erd\H{o}s--R\'enyi graphs of density $0.2$, $\rho_\infty$ decreases with $N$, faster than
+$1/N$ for $N\le400$. We have no general bound.
+\end{remark}
