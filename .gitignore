@@ -6,6 +6,7 @@ results/
 paper/arquitectura.md
 paper/literatura.md
 paper/auditoria-citas.md
+paper/auditoria-pruebas.md
 # LaTeX build files
 paper/*.aux
 paper/*.log
