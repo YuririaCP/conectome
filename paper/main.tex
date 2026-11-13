@@ -1,0 +1,321 @@
+\documentclass[aip,cha,reprint,amsmath,amssymb]{revtex4-2}
+
+\usepackage{graphicx}
+\usepackage{bm}
+\usepackage{amsthm}
+\usepackage[colorlinks=true,allcolors=blue]{hyperref}
+
+\newtheorem{proposition}{Proposition}
+\newtheorem{theorem}[proposition]{Theorem}
+\newtheorem{corollary}[proposition]{Corollary}
+\newtheorem{lemma}[proposition]{Lemma}
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}
+
+\newcommand{\one}{\mathbf 1}
+\newcommand{\corr}{\operatorname{corr}}
+\newcommand{\GSR}{\operatorname{GSR}}
+\newcommand{\diag}{\operatorname{diag}}
+\newcommand{\FC}{\mathrm{FC}}
+
+\begin{document}
+
+\title{The global-mode confound: what fitted whole-brain models can and cannot tell about the distance to a bifurcation}
+
+\author{Yuriria Cort\'es Poza}
+\thanks{ORCID: \href{https://orcid.org/0000-0003-1856-9206}{0000-0003-1856-9206}}
+\affiliation{Instituto de Investigaciones en Matem\'aticas Aplicadas y en Sistemas (IIMAS), Universidad Nacional Aut\'onoma de M\'exico, Mexico City, Mexico}
+
+\date{\today}
+
+\begin{abstract}
+Whole-brain models of coupled Stuart--Landau oscillators are fitted to resting-state functional connectivity (FC), and the fitted operating point is read as the brain's distance to a Hopf bifurcation. We separate two versions of this distance. The physical rate $\delta$ is not identifiable from zero-lag FC, which is invariant under a rescaling of time and under a common oscillation frequency. The dimensionless distance $\theta$, the ratio of damping to coupling, is identifiable in principle given the connectome, but confounded in practice. With excitatory coupling the mode that loses stability first is a positive Perron vector, bounded away from orthogonality to the uniform vector; with diffusive coupling it is the uniform vector. Near the bifurcation $\theta$ therefore enters FC only through its global level, where a uniform global component of any origin mimics it, and global signal regression removes 99.5\% of its first-order effect on a human connectome. We call this the \emph{global-mode confound}. In 800 Human Connectome Project sessions, the FC-based index $\kappa$, the slowest relaxation rate relative to the mean rate, is almost a function of mean FC without regression ($r=-0.995$ for $\log\kappa$) and becomes model-dependent with it. Simulations of the full nonlinear model confirm the confound up to the bifurcation, and the autocorrelation of the global signal recovers $\delta$ where FC cannot.
+\end{abstract}
+
+\maketitle
+
+\begin{quotation}
+\noindent\textbf{%
+A popular way to ask whether the resting brain sits close to an instability is to fit a network of noisy oscillators to the pattern of correlations between brain regions, and then read off how close the fitted network is to its bifurcation. We show that this data cannot give the distance in physical units, and gives a relative distance only in principle. The correlation pattern has no clock, so it cannot tell a slow system from a fast one; at best it fixes the distance relative to the strength of the coupling. Moreover, in networks with excitatory coupling, the pattern that becomes slow at the bifurcation is essentially the average of all regions, the ``global signal''. A change in the relative distance therefore looks like a change in the amplitude of a global signal with equal weights on all regions. Global signals in brain imaging also arise from breathing, arousal and head motion, and are routinely regressed out; within the model, regressing them out removes the information as well. We prove these statements for the linearized model, confirm them on a large human data set, and indicate what measurements could answer the question.}
+\end{quotation}
+
+%======================================================================
+\section{Introduction}\label{sec:intro}
+
+The hypothesis that the brain operates near a critical point has motivated two decades of work, from neuronal avalanches to large-scale imaging~\cite{OByrne2022,Wilting2018}. At the scale of whole-brain imaging the hypothesis is usually tested with models: a network of nonlinear oscillators, one per brain region, is coupled through the anatomical connectome and fitted to resting-state functional magnetic resonance imaging (fMRI)~\cite{Cabral2011}. The most widely used local dynamics is the normal form of a supercritical Hopf bifurcation, the Stuart--Landau oscillator, whose bifurcation parameter $a_j$ and a global coupling $G$ are adjusted until simulated and empirical functional connectivity (FC), the matrix of zero-lag correlations between regional signals, agree~\cite{Deco2017dynamics,Deco2017single,PonceAlvarez2024}. The fitted operating point is then interpreted: best fits near $a_j\approx0$ are read as evidence that the brain lies at the edge of the bifurcation~\cite{Deco2017dynamics}, and shifts of $a_j$ between brain states as movements towards or away from it; for example, slow-wave sleep has been described as a shift of the working point from the edge of the transition to a stable focus~\cite{Jobst2017}. Related arguments with other local dynamics reach the same conclusion: resting-state networks emerge in a model of the connectome only when it is tuned to criticality~\cite{Haimovici2013}.
+
+There is a tension in this programme. Criticality is a statement about time: at a bifurcation a mode loses its damping and its relaxation time diverges. Zero-lag FC is a normalized covariance and contains no unit of time. It is not obvious that a quantity without a clock can measure a rate.
+
+This paper shows that it cannot measure the rate, and that the dimensionless distance it can identify in principle is confounded in practice. We keep the two apart throughout: $\delta$ denotes the physical distance to the bifurcation, in $\mathrm s^{-1}$, and $\theta$ (or the index $\kappa$ of Sec.~\ref{sec:model}) a dimensionless distance measured in units of the coupling. In linearized whole-brain models with excitatory coupling, zero-lag FC is blind to the time scale, so $\delta$ is out of reach. The mode that becomes critical is, up to an explicit Perron--Frobenius bound, the global signal. Near the bifurcation, $\theta$ therefore enters FC only through the global level of correlation. There it is indistinguishable from the amplitude of any global component with uniform loading that is unrelated to the dynamics, and global signal regression (GSR), the standard remedy for such components~\cite{Murphy2017,Liu2017}, removes it together with the component. We call this coincidence of the critical mode with the global signal the \emph{global-mode confound}.
+
+The simplest example already shows both effects. Take a ring of identical damped oscillators with diffusive coupling (Fig.~\ref{fig:ring}). Speeding up every rate by a factor of four shortens the autocorrelation of every node by the same factor, yet the FC matrix does not change at all. The slowest mode, which decides how close the ring is to instability, is the uniform vector: every node moves together. Its rate $\theta$ is the distance to the bifurcation in units of the coupling, and near the bifurcation it affects FC, to first order, only through how strongly all nodes are correlated with all others.
+
+\begin{figure*}
+  \centering
+  \includegraphics[width=\textwidth]{figures/fig1_ring.pdf}
+  \caption{The two obstructions on a ring of $N=16$ diffusively coupled nodes with one chord, homogeneous ratio $\theta=0.05$. (a) Autocorrelation of node 1 for the linearized dynamics $J=-(\theta I+L)$ and for $4J$: the time scale changes by a factor of four. (b) The FC matrices of the two systems coincide entry by entry (Proposition~\ref{prop:rescale}). (c) Eigenvectors of $\theta I+L$: the slowest mode, whose rate $\theta$ is the distance to the bifurcation, is the uniform vector (Proposition~\ref{prop:diffusive}); the next mode decays four times faster.}
+  \label{fig:ring}
+\end{figure*}
+
+Our results are of two kinds. The first is a precise account of what zero-lag FC can identify. Proposition~\ref{prop:rescale} shows that FC is invariant under the rescaling $(a,\omega,G)\mapsto c(a,\omega,G)$, in the full nonlinear model and not only in its linearization, so the distance to the bifurcation in units of $\mathrm{s}^{-1}$ is not identifiable. Proposition~\ref{prop:omega} shows that a common oscillation frequency drops out exactly. Corollary~\ref{cor:closed} gives closed forms for the linearized FC and identifies it with a Gaussian graphical model; only partial correlations, and, when the coupling matrix is known, the ratios $\theta_j=|a_j|/G$, are identifiable. Parts of this are known in other guises: closed forms relating structural to functional connectivity~\cite{Galan2008,Saggio2016,Abdelnour2014}, the linearization of the Hopf model~\cite{PonceAlvarez2024}, the need for time-lagged covariances, or additional sparsity assumptions, to estimate effective connectivity~\cite{Gilson2016,Schiefer2018}, and, above the bifurcation, an empirical invariance of the fit to phase-based connectivity along curves $K\sim\sqrt\lambda$ of coupling against excitability~\cite{Alexandersen2025}. We state them in the form needed for the second kind of result.
+
+The second kind is the global-mode confound itself. Proposition~\ref{prop:perron} shows that for any excitatory (Metzler, irreducible) coupling the critical mode is positive, with cosine to the uniform vector bounded below by $2\sqrt{v_{\min}v_{\max}}/(v_{\min}+v_{\max})$. For diffusive coupling, Proposition~\ref{prop:diffusive} shows that it is the uniform vector, exactly for homogeneous $a$ and within an angle $\arcsin[(\theta_{\max}-\theta_{\min})/\lambda_2]$ otherwise. Proposition~\ref{prop:gsr} makes the confound quantitative near the bifurcation: $\FC=\one\one^\top-\tfrac{N\theta}{2}\Omega+O(\theta^2)$, with $\Omega$ the effective-resistance matrix of the graph, so $\theta$ enters only through the global level. A global artefact of variance $\sigma^2$ is equivalent, to first order, to replacing $\theta$ by $\theta/(1+N\sigma^2\theta)$, and after GSR the FC converges to $\corr(L^+)$, which does not depend on $\theta$. Theorem~\ref{thm:confound} extends the confound to any symmetric excitatory coupling with homogeneous damping, including additive coupling, without assuming that the critical mode is uniform. Near the bifurcation, FC tends to $\one\one^\top$ along a fixed direction, and regression on \emph{any} positively weighted global signal cancels the divergent part of the critical mode exactly, leaving a limit that does not depend on the distance to the bifurcation.
+
+These statements explain three observations in the literature that have so far been reported separately. Aquino and co-authors found that the accuracy of several whole-brain models tracks how well they fit the global signal, and that a two-parameter model does as well~\cite{Aquino2022}. Fitted operating points disagree between studies, just below the bifurcation in some~\cite{Deco2017dynamics} and arbitrarily far beyond it in others~\cite{Alexandersen2025}, and both report degeneracies of the fit: beyond a critical coupling the optimal regional bifurcation parameters ``remain the same, only scaled''~\cite{Deco2017dynamics}, and above the bifurcation the fit depends only on $K/\sqrt\lambda$~\cite{Alexandersen2025}. Below the bifurcation, Corollary~\ref{cor:closed} shows that a whole curve of operating points produces the same FC. And the FC dynamics used to select $G$ are largely reproduced by stationary linear processes~\cite{Liegeois2017}. We test each prediction on two data sets from the Human Connectome Project, time series from 7 subjects and FC from 200 subjects in 4 sessions each. We also check the theory in the full nonlinear model, where the confound holds up to the bifurcation and weakens above it, and show that the autocorrelation of the global signal recovers $\delta$ along a family of systems with identical FC.
+
+Section~\ref{sec:model} introduces the model and proves the identifiability results. Section~\ref{sec:confound} proves the global-mode confound. Section~\ref{sec:empirical} tests the predictions on data, and Sec.~\ref{sec:discussion} discusses what can be identified, what cannot, and which measurements could close the gap.
+
+%======================================================================
+\section{Model and identifiability}\label{sec:model}
+
+\subsection{The whole-brain Stuart--Landau model}
+
+Each of $N$ regions carries a complex amplitude $z_j$ that obeys
+\begin{multline}\label{eq:sl}
+  \mathrm dz_j=\Bigl[(a_j+i\omega_j)z_j-|z_j|^2z_j+G\sum_{k}M_{jk}z_k\Bigr]\mathrm dt\\
+  +\beta\,(\mathrm dW^x_j+i\,\mathrm dW^y_j),
+\end{multline}
+where $a_j$ is the local bifurcation parameter, $\omega_j$ the intrinsic angular frequency, $G\ge0$ the global coupling, $\beta$ the noise amplitude and $W^x_j,W^y_j$ independent standard Wiener processes. The observed regional signal is $x_j=\operatorname{Re}z_j$. The coupling matrix is either \emph{diffusive}, $M=-L$ with $L=\diag(C\one)-C$ the Laplacian of the non-negative connectome $C$, as in Refs.~\onlinecite{Deco2017dynamics,PonceAlvarez2024}, or \emph{additive}, $M=C$. We say the coupling is \emph{excitatory} when $M$ is Metzler (non-negative off the diagonal); both choices are.
+
+Below the bifurcation the origin is stable and, for small noise, Eq.~\eqref{eq:sl} is well approximated by its linearization~\cite{PonceAlvarez2024}. Writing $A=\diag(a)+GM$ and $\Omega_\omega=\diag(\omega)$, the linearized system is the complex Ornstein--Uhlenbeck process $\mathrm dz=(A+i\Omega_\omega)z\,\mathrm dt+\beta\,\mathrm d\mathbf W$, or, in real coordinates,
+\begin{equation}\label{eq:jac}
+  \mathrm d\begin{pmatrix}x\\y\end{pmatrix}=J\begin{pmatrix}x\\y\end{pmatrix}\mathrm dt+\beta\,\mathrm d\mathbf W,\qquad
+  J=\begin{pmatrix}A&-\Omega_\omega\\ \Omega_\omega&A\end{pmatrix}.
+\end{equation}
+Its stationary covariance $\Sigma$ solves the Lyapunov equation $J\Sigma+\Sigma J^\top+\beta^2I=0$, and $\FC=\corr(\Sigma_{xx})$, where $\corr(S)=D_S^{-1/2}SD_S^{-1/2}$ and $D_S=\diag(S)$. The \emph{distance to the bifurcation} is $\delta=-\max\operatorname{Re}\operatorname{spec}(J)$, in units of $\mathrm{s}^{-1}$. For the empirical data in Sec.~\ref{sec:empirical}, the linearized FC agreed with simulations of Eq.~\eqref{eq:sl} with $r>0.98$ over the range of operating points we fitted.
+
+\subsection{Time rescaling}
+
+\begin{proposition}[Time rescaling]\label{prop:rescale}
+Let $z(t)$ be a stationary solution of Eq.~\eqref{eq:sl} with parameters $(a,\omega,G,\beta)$ and let $c>0$. Then $\sqrt c\,z(ct)$ is a stationary solution of Eq.~\eqref{eq:sl} with parameters $(ca,c\omega,cG,c\beta)$. Consequently, every statistic of the stationary distribution that is invariant under a common scaling of the signals, in particular zero-lag FC, takes the same value at $(a,\omega,G)$ and at $(ca,c\omega,cG)$, while $\delta$ is multiplied by $c$.
+\end{proposition}
+
+\begin{proof}
+Set $u(t)=\sqrt c\,z(ct)$. Then $\mathrm du=\sqrt c\,c\bigl[(a+i\omega)z-|z|^2z+GMz\bigr](ct)\,\mathrm dt+\sqrt c\,\beta\,\mathrm d\mathbf W(ct)$. Since $\sqrt c\,z=u$ and $c|z|^2=|u|^2$, the drift equals $\bigl[(ca+ic\omega)u-|u|^2u+cGMu\bigr]\mathrm dt$. The process $\mathbf W(ct)$ has the law of $\sqrt c\,\widetilde{\mathbf W}(t)$ for a standard Wiener process $\widetilde{\mathbf W}$, so the noise term is $c\beta\,\mathrm d\widetilde{\mathbf W}$. The marginal law of $u(t)$ is that of $\sqrt c\,z(0)$, and correlations are invariant under the factor $\sqrt c$. Finally $\operatorname{spec}J$ scales by $c$ because $J$ is linear in $(a,\omega,G)$.
+\end{proof}
+
+The proposition does not concern the noise: $\beta$ only fixes the overall amplitude, which FC discards. Thus an FC-based fit can at best determine $(a,\omega,G)$ up to a common factor, and $\delta$ up to the same factor. The statement is exact for the unfiltered signal. A band-pass filter with fixed cut-offs in hertz breaks the invariance, so filtered FC does carry information about the time scale, but only through the shape of the filter. In Sec.~\ref{sec:fit} we show that in practice this information is too weak to pin down $\delta$.
+
+\subsection{A common frequency drops out}
+
+\begin{proposition}[Common frequency]\label{prop:omega}
+If $\omega_j=\omega$ for all $j$, the stationary law of $z(t)$ at a fixed time, and hence zero-lag FC, does not depend on $\omega$. This holds for Eq.~\eqref{eq:sl} and for its linearization.
+\end{proposition}
+
+\begin{proof}
+Let $u(t)=e^{-i\omega t}z(t)$. Because the cubic term and the coupling commute with a global phase rotation,
+$\mathrm du=\bigl[a\odot u-|u|^2\odot u+GMu\bigr]\mathrm dt+\beta e^{-i\omega t}\mathrm d\mathbf W$, where $\odot$ is the entrywise product. Circular complex white noise is invariant in law under a deterministic rotation, so $u$ is a solution of Eq.~\eqref{eq:sl} with $\omega=0$. That system is equivariant under $u\mapsto e^{i\phi}u$, and so is its noise, so its stationary law is rotation invariant. Hence $z(t)=e^{i\omega t}u(t)$ has the same marginal law as $u(t)$.
+\end{proof}
+
+Heterogeneous frequencies do enter FC, but weakly in the diffusive model: in our fits, setting $\omega_j=0$ (a multivariate Ornstein--Uhlenbeck model without oscillation) reproduced FC as well as the Hopf model did (Sec.~\ref{sec:fit}).
+
+\subsection{Closed forms and the graphical-model reading}
+
+From now on, $C$ is symmetric and the frequency is common. By Proposition~\ref{prop:omega} we may set $\omega=0$. Then $x$ and $y$ are independent, $A$ is symmetric negative definite, and the Lyapunov equation gives $\Sigma_{xx}=-\tfrac{\beta^2}{2}A^{-1}$.
+
+\begin{corollary}[Closed forms and identifiability]\label{cor:closed}
+Let $C$ be symmetric, non-negative and irreducible, and let the frequency be common.
+\begin{enumerate}
+  \item[(i)] Diffusive coupling: $\FC=\corr\bigl[(\diag\theta+L)^{-1}\bigr]$ with $\theta_j=|a_j|/G$. Additive coupling with homogeneous $a$: $\FC=\corr\bigl[(I-\rho\hat C)^{-1}\bigr]$ with $\hat C=C/\lambda_{\max}(C)$ and $\rho=G\lambda_{\max}(C)/|a|<1$; the bifurcation is at $\rho=1$.
+  \item[(ii)] In both cases $x$ is a Gaussian vector with precision matrix proportional to $K=\diag(q)-C$, with $q_j=\theta_j+\sum_kC_{jk}$ (diffusive) or $q_j=|a_j|/G$ (additive). For any precision $K$ and any positive diagonal $D$, $\corr(K^{-1})=\corr\bigl((DKD)^{-1}\bigr)$, and FC determines $K$ exactly up to $K\mapsto DKD$. Hence FC identifies precisely the partial correlations $\pi_{ij}=-K_{ij}/\sqrt{K_{ii}K_{jj}}$.
+  \item[(iii)] If $C$ is known and its graph is connected and not bipartite, then $q$, and hence every $\theta_j$, is identifiable from FC. If $C$ is a free parameter, no function of $q$ that is not invariant under $q\mapsto D^2q$ is identifiable. In neither case is $\delta$ in $\mathrm{s}^{-1}$ identifiable.
+\end{enumerate}
+\end{corollary}
+
+\begin{proof}
+(i) For diffusive coupling, $A=-\diag|a|-GL=-G(\diag\theta+L)$; for additive coupling, $A=-|a|(I-\rho\hat C)$. Positive factors disappear in $\corr$.
+(ii) $\Sigma_{xx}\propto K^{-1}$ with $K$ as stated, because $L=\diag(C\one)-C$. The identity $(DKD)^{-1}=D^{-1}K^{-1}D^{-1}$ gives the invariance. Conversely, if $\corr(K^{-1})=\corr(K'^{-1})=F$, then $K^{-1}=E F E$ and $K'^{-1}=E'FE'$ for positive diagonal $E,E'$, so $K'=(E^{-1}E')^{-1}K(E^{-1}E')^{-1}$. Partial correlations are invariant under $K\mapsto DKD$, and they determine $K$ up to that transformation.
+(iii) For an edge $(i,j)$, $\pi_{ij}^2=C_{ij}^2/(q_iq_j)$, so the products $q_iq_j$ are known on every edge. On a connected graph these products fix $q$ up to $q_i\mapsto tq_i$ on one class of a bipartition and $q_i\mapsto q_i/t$ on the other; an odd cycle forces $t=1$. The last claim is Proposition~\ref{prop:rescale}.
+\end{proof}
+
+Part (iii) separates two regimes that are often conflated. With a fixed structural connectome, the dimensionless ratios $\theta_j$ are identifiable in principle; with a fitted effective connectivity they are not, because the fit can absorb any diagonal rescaling. Even in the first regime, only the ratio of damping to coupling is fixed. An analogous degeneracy above the bifurcation, where the fit to phase-lag connectivity depends only on the ratio $K/\sqrt\lambda$ of coupling to excitability, was found empirically in Ref.~\onlinecite{Alexandersen2025}; that regime lies outside our linear analysis. In neither regime can a fitted distance from $a=0$ be read as a rate.
+
+For homogeneous diffusive damping, $\delta=G\theta$, and the scale-free version of the distance to the bifurcation is $\theta$ itself. More generally we use the index $\kappa=\mu_{\min}/\bar\mu$, the ratio of the slowest decay rate to the mean decay rate of $-A$. It is invariant under Proposition~\ref{prop:rescale} and vanishes at the bifurcation. For additive coupling with homogeneous $a$, $\operatorname{tr}C=0$ gives $\kappa=1-\rho$.
+
+%======================================================================
+\section{The global-mode confound}\label{sec:confound}
+
+\subsection{The critical mode is positive}
+
+\begin{proposition}[Critical mode under excitatory coupling]\label{prop:perron}
+Let $A=\diag(a)+GM$ with $M$ Metzler and irreducible. Then the eigenvalue of $A$ with largest real part, $-\delta$, is real and simple, and its eigenvector $v$ can be chosen with all entries positive. With $v_{\min}=\min_jv_j$ and $v_{\max}=\max_jv_j$,
+\begin{equation}\label{eq:polya}
+  \cos\angle(v,\one)=\frac{\one^\top v}{\sqrt N\,\|v\|}\ \ge\ \frac{2\sqrt{v_{\min}v_{\max}}}{v_{\min}+v_{\max}}.
+\end{equation}
+If moreover $A$ is symmetric, $\Sigma_{xx}=\tfrac{\beta^2}{2}\sum_k\mu_k^{-1}u_ku_k^\top$ in the orthonormal eigenbasis $\{u_k\}$ of $-A$, with $u_1=v/\|v\|$ and $\mu_1=\delta$, so the fraction of the total variance carried by $v$ tends to one as $\delta\to0$.
+\end{proposition}
+
+\begin{proof}
+For $s$ large, $A+sI$ is non-negative and irreducible, and the Perron--Frobenius theorem~\cite{Berman1994} gives a simple real eigenvalue of maximal modulus, which for $A$ is the eigenvalue of maximal real part, with a positive eigenvector. For \eqref{eq:polya}, which is the Pólya--Szegő inequality~\cite{PolyaSzego1925}, note that $(v_j-v_{\min})(v_{\max}-v_j)\ge0$ gives $v_j^2+v_{\min}v_{\max}\le(v_{\min}+v_{\max})v_j$. Summing over $j$ and using $2\sqrt{N v_{\min}v_{\max}}\,\|v\|\le\|v\|^2+Nv_{\min}v_{\max}$ yields $2\sqrt{Nv_{\min}v_{\max}}\,\|v\|\le(v_{\min}+v_{\max})\one^\top v$. The variance statement follows from $\Sigma_{xx}=-\tfrac{\beta^2}2A^{-1}$.
+\end{proof}
+
+The bound \eqref{eq:polya} depends only on the spread of the Perron vector. For additive coupling with homogeneous $a$, $v$ is the Perron vector of $C$; for the group structural connectome of Sec.~\ref{sec:empirical}, $\cos\angle(v,\one)=0.82$, and $0.989$ after the compressive transformation of the weights selected by the fit (Sec.~\ref{sec:additive}).
+
+\subsection{Diffusive coupling: the critical mode is the global signal}
+
+\begin{proposition}[Diffusive coupling]\label{prop:diffusive}
+Let $M=-L$ with $C$ symmetric and the graph connected, and let $0=\lambda_1<\lambda_2\le\dots\le\lambda_N$ be the eigenvalues of $L$. Then $\delta/G$ is the smallest eigenvalue of $\diag\theta+L$, and $\theta_{\min}\le\delta/G\le\bar\theta$, where $\bar\theta$ is the mean of $\theta$. If $\theta$ is homogeneous, the critical mode is exactly $\one/\sqrt N$ and $\delta=G\theta$. In general, its angle $\phi$ to $\one$ satisfies
+\begin{equation}\label{eq:dk}
+  \sin\phi\le\frac{\theta_{\max}-\theta_{\min}}{\lambda_2}.
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+$-A=G(\diag\theta+L)$. The lower bound holds because $L\succeq0$; the upper bound is the Rayleigh quotient at $\one$. For homogeneous $\theta$, $(\theta I+L)\one=\theta\one$ and $\theta$ is the smallest eigenvalue because $L\succeq0$. In general write $\diag\theta+L=(\tilde\theta I+L)+E$ with $\tilde\theta=(\theta_{\max}+\theta_{\min})/2$ and $E=\diag(\theta-\tilde\theta)$, so $\|E\|_{\mathrm{op}}=(\theta_{\max}-\theta_{\min})/2$. The unperturbed matrix has its smallest eigenvalue $\tilde\theta$, eigenvector $\one$, separated from the rest of the spectrum by $\lambda_2$. The Davis--Kahan bound in the form of Theorem~2 of Ref.~\onlinecite{Yu2015}, which requires only symmetry and a gap in the unperturbed spectrum, gives $\sin\phi\le2\|E\|_{\mathrm{op}}/\lambda_2$.
+\end{proof}
+
+The slowest mode of the diffusive model is therefore, up to the heterogeneity of the damping relative to the spectral gap, the average of all regions. It is the mode whose variance diverges at the bifurcation (Proposition~\ref{prop:perron}), and it is also, by construction, the mode removed by global signal regression. The next subsection quantifies the consequences.
+
+\input{sections/prop5_gsr}
+
+\begin{figure*}
+  \centering
+  \includegraphics[width=\textwidth]{figures/fig2_gsr.pdf}
+  \caption{Proposition~\ref{prop:gsr} on the group structural connectome (Schaefer-100, $N=100$). (a) Raw FC approaches $\one\one^\top$ linearly in $\theta$ with slope $\tfrac N2\overline\Omega$ (dashed); after GSR, FC approaches the $\theta$-independent limit $\corr(L^+)$. (b) Ratio of the sensitivities to $\log\theta$ with and without GSR; it converges to $\rho_\infty=0.0051$ (dashed). (c) Off-diagonal FC entries with a global artefact of variance $\sigma^2=1/(N\theta)$ at $\theta=0.01$, against FC without the artefact at $\theta$ (orange) and at $\theta_{\mathrm{eff}}=\theta/(1+N\sigma^2\theta)$ (blue): the artefact is equivalent to a change of the distance to the bifurcation.}
+  \label{fig:gsr}
+\end{figure*}
+
+\input{sections/theorem_general}
+
+%======================================================================
+\section{Empirical consequences}\label{sec:empirical}
+
+The propositions make four predictions that can be tested on data: (P1) FC dynamics and metastability, the observables commonly used to select $G$, do not require a nonlinear or critical system; (P2) improving the fit of FC does not make the physical distance $\delta$ identifiable; (P3) without GSR, an FC-based index of the dimensionless distance is a function of mean FC, and with GSR it becomes unreliable and model-dependent; (P4) additive coupling does not escape the confound. We then check the theory in the full nonlinear model (Sec.~\ref{sec:nonlinear}) and show what a temporal measurement of $\delta$ can recover (Sec.~\ref{sec:temporal}). The fitting procedures, parameter bounds and validation splits are given in Appendix~\ref{app:methods}; code is available at \url{https://github.com/YuririaCP/conectome}.
+
+\subsection{Data}
+
+\emph{Time series.} Resting-state BOLD signals of 7 subjects from the Human Connectome Project~\cite{VanEssen2013}, as distributed with \texttt{neurolib}~\cite{Cakan2023}: AAL2 parcellation with $N=94$ regions, repetition time $0.72\,$s, 1200 volumes per subject, band-pass filtered to 0.008--0.08\,Hz, with the matching structural connectome. Empirical mean FC is 0.373 and peak frequencies lie between 0.018 and 0.030\,Hz.
+
+\emph{Connectomes.} Structural and functional connectomes of 200 HCP subjects released by Domhof and co-authors~\cite{DomhofData2021,Domhof2021}, Schaefer-100 parcellation~\cite{Schaefer2018}, four resting-state sessions per subject (two phase-encoding directions on two days), giving 800 FC matrices. These FC matrices were computed from ICA-FIX denoised, detrended and z-scored signals without band-pass filtering and without GSR, which matches the setting of Propositions~\ref{prop:rescale}--\ref{prop:gsr}. Group FC from two disjoint halves of the cohort correlates at $r=0.995$, and group FC from sessions 1--2 and 3--4 at $r=0.997$.
+
+\subsection{FC dynamics are largely reproduced by a stationary linear process}\label{sec:fcd}
+
+We computed functional connectivity dynamics (FCD)~\cite{Hansen2015} with windows of 60\,s and steps of 2\,s, and metastability as the standard deviation of the Kuramoto order parameter of the Hilbert phases~\cite{Shanahan2010}. We generated multivariate phase-randomized surrogates~\cite{Prichard1994}: the discrete Fourier transform of each subject's band-passed regional signals was multiplied, at each nonzero frequency below Nyquist, by a phase factor $e^{i\phi_f}$ with $\phi_f$ uniform on $[0,2\pi)$ and shared by all regions, and transformed back. This preserves exactly the sample auto- and cross-periodograms, hence the sample FC and all circular lagged covariances, and destroys any structure beyond them. The surrogates are thus realizations compatible with a stationary linear process with the same second-order statistics, which is the null hypothesis they test; we make no claim about the Gaussianity of individual finite realizations. Pooled over subjects, they reproduce the empirical FCD distribution (Kolmogorov--Smirnov distance 0.072; 0.097 after GSR) and the empirical metastability (0.175 against 0.176) [Fig.~\ref{fig:fcd}(a,b)].
+
+Per subject, we compared each statistic with 39 surrogates (two-sided Monte Carlo tests, smallest attainable $p=0.025$). Metastability differed from its surrogate distribution at $p<0.05$ in 1 of 7 subjects, with no consistent sign (Fisher's combined $p=0.17$). The KS distance between the empirical and surrogate FCD exceeded the surrogate-to-surrogate null in 1 of 7 subjects (combined $p=0.18$). The spread of the FCD, a standard index of non-stationarity, was larger in the data than in the surrogates in all 7 subjects (sign test $p=0.016$), by 10\% on average, but significantly so in only 1 subject. FC dynamics and metastability, as used to select $G$, are therefore largely accounted for by a stationary linear process with the same second-order structure, with a small but consistent excess of FCD variability, in line with Ref.~\onlinecite{Liegeois2017} (P1). With 7 subjects this is a demonstration that these observables do not require criticality or nonlinearity, not an estimate of how much non-stationarity human resting-state data contain.
+
+In the nonlinear Hopf model with homogeneous parameters, the FCD distance decreases monotonically with $G$, reaching 0.044 at $G=3.5$. At that coupling, however, mean FC is 0.815 against an empirical 0.373, and the correlation between model and empirical FC falls to 0.445. Selecting $G$ by FCD therefore selects a strong global level of correlation [Fig.~\ref{fig:fcd}(c)], as Proposition~\ref{prop:gsr}(a) predicts.
+
+\begin{figure*}
+  \centering
+  \includegraphics[width=\textwidth]{figures/fig3_fcd.pdf}
+  \caption{FC dynamics are largely reproduced without a critical or nonlinear system (7 HCP subjects, AAL2). (a,b) Distribution of FCD entries (correlations between 60-s windows of FC), pooled over subjects, for the empirical data and for multivariate phase-randomized surrogates, which preserve the sample auto- and cross-periodograms and are compatible with a stationary linear process; KS is the Kolmogorov--Smirnov distance. (c) Nonlinear Stuart--Landau model with homogeneous parameters: the FCD distance is smallest at $G=3.5$, where model mean FC (0.815) is more than twice the empirical value (dashed).}
+  \label{fig:fcd}
+\end{figure*}
+
+\subsection{Better fits, no identifiability}\label{sec:fit}
+
+On the time-series data we fitted an effective connectivity (EC) with the update of Ref.~\onlinecite{Gilson2016}, using zero-lag and lagged covariances, region-wise $a_j$ and, in a second step, regional power spectra. On held-out subjects, model FC reached $r=0.764$ against a noise ceiling of 0.795, compared with 0.435 for the structural connectome. Two observations confirm (P2). First, the multivariate Ornstein--Uhlenbeck model ($\omega_j=0$) fitted as well as the Hopf model (held-out FC $r=0.766$ and 0.760 with EC alone; 0.771 and 0.729 when spectra were also fitted). Second, the fitted $a_j$ sat at the bounds of the admissible interval in 80 of 94 regions for the Hopf model and in 73 of 94 for the Ornstein--Uhlenbeck model, and the implied $\delta$ ranged from 0.03 to 0.15 between model variants of equal quality. The temporal information that a band-pass filter adds to FC (Proposition~\ref{prop:rescale}) is not enough to fix $\delta$.
+
+On the 200-subject connectomes we fitted a symmetric diffusive EC to the group FC of half the cohort. On the other half, it reached $r=0.885$ with GSR (0.776 without), and individual FC was fitted with median $r=0.631$, against a test--retest ceiling of 0.894 and a group-template ceiling of 0.817. The fitted ratio was driven to $\theta\to0$: the median $\kappa$ across sessions was 0.0026, and with the SC-anchored diffusive model 84\% of sessions reached the lower bound.
+
+\subsection{A relative criticality index is mean FC, or nothing}\label{sec:kappa}
+
+For each of the 800 sessions we fitted a single dynamical parameter, $\theta$ (diffusive) or $\rho$ (additive), with the coupling matrix fixed at the group level, and computed $\kappa$. Without GSR, $\kappa$ was reliable across sessions (ICC(3,1) over four sessions 0.63; between days 0.65), but it was almost perfectly explained by mean FC: $r(\log\kappa,\overline{\FC})=-0.995$, and after partialling out mean FC the reliability fell to 0.30 [Fig.~\ref{fig:kappa}(a)]. This is Proposition~\ref{prop:gsr}(a) and (d): the index measures the global level of correlation (P3).
+
+With GSR, the dependence on mean FC dropped ($r=-0.42$), as did the reliability (ICC over four sessions 0.47; between days 0.60). Replacing the group connectome by each subject's own connectome raised the four-session ICC to 0.65. Replacing it by the connectome of \emph{another} subject also raised it, to 0.60. The gain therefore reflects the stable individual structure that any connectome imprints on the fit, not the subject's dynamics [Fig.~\ref{fig:kappa}(b,c)]. Most importantly, $\kappa$ after GSR depended on the model: across subjects, the indices from additive coupling on the structural connectome and on the fitted EC correlated at $r=-0.36$, and those from additive and diffusive coupling on the same connectome at $r=0.57$ [Fig.~\ref{fig:additive}(b,c)]. A quantity that changes sign with modelling choices of equal fit quality is not a measurement of the brain.
+
+\begin{figure*}
+  \centering
+  \includegraphics[width=\textwidth]{figures/fig4_kappa.pdf}
+  \caption{The relative criticality index $\kappa$ over 800 sessions (200 HCP subjects, 4 sessions, Schaefer-100), fitted with the group connectome and one dynamical parameter per session. (a) Without GSR, $\log\kappa$ is a function of mean FC. (b) With GSR the dependence weakens. (c) Four-session reliability of $\log\kappa$: with GSR, using each subject's own connectome raises it, but so does the connectome of another subject (orange), so the gain is structural rather than dynamical.}
+  \label{fig:kappa}
+\end{figure*}
+
+\subsection{Additive coupling does not escape}\label{sec:additive}
+
+With additive coupling the critical mode is the Perron vector of the coupling matrix rather than $\one$, so one might hope to separate it from the global signal. Proposition~\ref{prop:perron} limits this hope, and the data remove it (P4). With the coupling anchored to the structural connectome, the transformation of the weights selected by the fit gave $\cos\angle(v,\one)=0.989$; for the untransformed group connectome the cosine is 0.82, and for the 200 individual connectomes it ranges from 0.46 to 0.91 [Fig.~\ref{fig:additive}(a)]. With a free symmetric EC, the diffusive model fitted held-out group FC better than the additive one ($r=0.885$ against 0.796 with GSR), and the partial correlations implied by the two fits agreed at $r=0.78$. In individual fits with GSR, 19\% of sessions placed the additive model at the bound $\rho\to1$.
+
+\begin{figure*}
+  \centering
+  \includegraphics[width=\textwidth]{figures/fig5_additive.pdf}
+  \caption{Additive coupling does not escape the confound. (a) Cosine between the Perron vector $v$ of the group connectome with weights raised to the power $\alpha$ and the uniform vector, with the Pólya--Szegő lower bound \eqref{eq:polya}; dots: the 200 individual connectomes with untransformed weights. (b,c) Subject-level $\log\kappa$ (mean over 4 sessions, with GSR) from three models of comparable fit: additive coupling on the structural connectome against diffusive coupling on the same connectome, where many sessions sit at the lower bound of $\kappa$ (b), and against additive coupling on the fitted EC (c).}
+  \label{fig:additive}
+\end{figure*}
+
+\subsection{Beyond the linearization}\label{sec:nonlinear}
+
+The propositions concern the linearized model with a common frequency. We tested the confound in the full model, Eq.~\eqref{eq:sl}, with heterogeneous frequencies, across the bifurcation. We used the AAL2 group connectome ($N=94$, normalized to mean strength 1), diffusive coupling with $G=0.2$, the empirical regional peak frequencies, $\beta=0.02$, and homogeneous $a$ from $-0.2$ to $0.05$. For each $a$ we ran 4 independent simulations of 50\,000\,s and computed zero-lag FC of $x=\operatorname{Re}z$ sampled at the TR. For each pair of neighbouring values of $a$ we measured the root-mean-square change of FC with and without GSR, after subtracting the sampling noise estimated from the spread across realizations (Fig.~\ref{fig:nonlinear}).
+
+Below the bifurcation, nonlinear and linearized FC agree ($r\ge0.978$), and the ratio of the sensitivities with and without GSR follows the linear prediction (0.598 against 0.600, 0.413 against 0.409 and 0.258 against 0.255 on the three intervals furthest from the bifurcation). From $a=-0.03$ to $a=0.005$, raw FC changes by 3 to 14 times the sampling noise on each interval, while the change after GSR stays below it. The ratio reaches its minimum, 0.041, on the interval $[0,0.005]$ that contains the bifurcation. Heterogeneous frequencies, which lie outside the hypotheses of Proposition~\ref{prop:omega} and Theorem~\ref{thm:confound}, therefore do not undo the confound.
+
+Above the bifurcation the picture changes. Once oscillations are self-sustained, FC acquires structure that is not global, most likely through partial phase locking among oscillators with different frequencies. FC after GSR then changes with $a$, with ratios 0.069, 0.24 and 1.25 on the intervals up to $a=0.05$, while raw FC saturates (mean 0.91 at $a=0.05$). Band-passed FC gives the same pattern (ratios from 0.53 down to 0.058 up to the bifurcation, then 0.12, 0.42 and 2.1). The global-mode confound is thus a property of the approach to the bifurcation from the damped side, which is where fitted operating points are usually read as distances to criticality. In the oscillatory regime FC after GSR is informative, in line with the degeneracy reported there in terms of $K/\sqrt\lambda$ rather than of the distance itself~\cite{Alexandersen2025}.
+
+\begin{figure*}
+  \centering
+  \includegraphics[width=\textwidth]{figures/fig6_nonlinear.pdf}
+  \caption{The confound in the full nonlinear model with heterogeneous frequencies (AAL2 group connectome, $G=0.2$, homogeneous $a$; 4 realizations of 50\,000\,s per value). (a) Mean raw FC across the bifurcation at $a=0$. (b) Root-mean-square change of FC per unit $a$ between neighbouring values, without and with GSR, after subtracting sampling noise; open circles: changes below the sampling noise of FC after GSR (dashed). (c) Ratio of the two sensitivities, compared with the linear theory below the bifurcation.}
+  \label{fig:nonlinear}
+\end{figure*}
+
+\subsection{Measuring $\delta$ in time}\label{sec:temporal}
+
+The obstruction concerns zero-lag statistics, not the data. In the diffusive model with homogeneous damping, the global signal is the critical mode, so its autocorrelation decays at the physical rate $\delta$. We simulated the linearized model on the Schaefer-100 group connectome ($\theta=0.025$, common frequency 0.02\,Hz) along the family $(a,\omega,G,\beta)\mapsto c\,(a,\omega,G,\beta)$, $c\in\{0.5,1,2,4\}$. Along it the analytic FC is identical to machine precision, while $\delta=c|a|$ ranges from 0.01 to 0.08\,s$^{-1}$. From sessions of realistic length ($4\times1200$ volumes at $\mathrm{TR}=0.72$\,s, 5 realizations each), fitting $e^{-\delta\tau}\cos\omega\tau$ to the autocorrelation of the global signal over lags up to 60\,s recovered $\delta$ to within 8\% in every case [0.010, 0.020, 0.037 and 0.079\,s$^{-1}$; Fig.~\ref{fig:temporal}(a)]. The same fit applied to individual regions overestimated $\delta$ by an order of magnitude, because regional signals mix the critical mode with faster ones. After GSR it overestimated $\delta$ by a factor of about 27, because the critical mode has been removed.
+
+The empirical time series are consistent with this picture, though they cannot test it directly. With only a high-pass filter at 0.008\,Hz, the global signal had a longer integrated autocorrelation time than the median region in all 7 subjects (2.6--4.2\,s against 2.0--2.8\,s), and GSR shortened the regional time scales in all 7 subjects (to 1.4--2.3\,s) [Fig.~\ref{fig:temporal}(b,c)]. Hemodynamics, respiration and arousal all contribute to these time scales. Separating the critical mode from them is the measurement problem that the global-mode confound poses, and it cannot be solved with zero-lag FC.
+
+\begin{figure*}
+  \centering
+  \includegraphics[width=\textwidth]{figures/fig7_temporal.pdf}
+  \caption{Measuring the physical distance $\delta$ from temporal structure. (a) Linearized diffusive model on the group connectome along an FC-invariant family (Proposition~\ref{prop:rescale}): $\delta$ estimated from the autocorrelation of the global signal, of individual regions (median) and of regions after GSR, against the true $\delta$ (mean and s.d. over 5 simulated data sets of $4\times1200$ volumes). (b) Empirical autocorrelation of the global signal and of the regional signals (median over regions) before and after GSR; mean and s.d. over 7 subjects. (c) Integrated autocorrelation times per subject.}
+  \label{fig:temporal}
+\end{figure*}
+
+%======================================================================
+\section{Discussion}\label{sec:discussion}
+
+\emph{What FC can identify.} Zero-lag FC of a linear(ized) whole-brain model is the correlation matrix of a Gaussian graphical model~\cite{Lauritzen1996}. It identifies partial correlations and, given the coupling matrix, the dimensionless ratios $\theta_j=|a_j|/G$. It does not identify the time scale (Proposition~\ref{prop:rescale}), a common frequency (Proposition~\ref{prop:omega}), or the physical distance $\delta$ to the bifurcation. These statements are elementary, but they rule out reading a fitted $G$ or $a$ as a rate. They do not rule out the dimensionless distance $\theta$, or the index $\kappa$, which is a well-defined target under the model's assumptions.
+
+\emph{What FC cannot separate.} The scale-free distance $\theta$ would still be a meaningful quantity, and with a fixed connectome it is identifiable in principle. The global-mode confound is what makes it hard to measure in practice. With excitatory coupling, the critical mode is positive and close to uniform (Propositions~\ref{prop:perron} and~\ref{prop:diffusive}); near the bifurcation $\theta$ enters FC only through its global level, which any global component with uniform loading can mimic (Proposition~\ref{prop:gsr}). Within the model this is a theorem. Its bearing on fMRI depends on an empirical premise: resting-state global fluctuations are associated with vigilance, respiration and motion~\cite{Liu2017}, and the confound applies to such components to the extent that their spatial loading is close to uniform (Remark~\ref{rem:loading}). Our analysis does not establish how close it is. What it does establish is that, near the bifurcation and to first order, any uniform component is exchangeable with a change of $\theta$, and that regressing out the global signal removes such a component together with the information about $\theta$. This offers a mechanism for the finding that model accuracy tracks the global signal~\cite{Aquino2022}, and for the degeneracy of the operating points fitted in different studies~\cite{Deco2017dynamics,Alexandersen2025}.
+
+\emph{How to measure it.} Distance to criticality is a rate, and the natural observables are temporal (Sec.~\ref{sec:temporal}): the autocorrelation time of the slow mode, its growth as a control parameter is varied (critical slowing down~\cite{Scheffer2009}), or branching-type estimators~\cite{Wilting2018}. Our results add two requirements. First, the observable must be taken along the critical mode, which in these models is close to the global signal; Rabuffo and co-authors use exactly the lag-one autocorrelation of the global signal~\cite{Rabuffo2025}. Second, the global artefacts must be separated from the critical mode by means other than GSR, for example by physiological regressors (respiration, cardiac and arousal recordings) or by data-driven removal of non-neural components. Information-geometric estimators~\cite{Du2026} face the same constraint when they weight regions by the leading eigenvector of the connectome, which by Proposition~\ref{prop:perron} is positive and, for the group connectome used here, has cosine 0.82 with the uniform vector.
+
+\emph{Limitations.} The propositions concern the linearization and zero-lag statistics. Proposition~\ref{prop:rescale} holds for the nonlinear model, and simulations show that the confound survives nonlinearity and heterogeneous frequencies up to the bifurcation (Sec.~\ref{sec:nonlinear}). Above it, partial phase locking makes FC after GSR informative again, and a theory of that regime is open. We did not include a hemodynamic model, and the empirical analyses use one parcellation per data set. The time-series analyses rest on 7 subjects and should be read as demonstrations of possibility, while the connectome analyses use 800 sessions. The Davis--Kahan bound~\eqref{eq:dk} can be loose for strongly heterogeneous damping, and we have no general estimate of $\rho_\infty(L)$, which on random graphs decreases with $N$. Finally, delays in the coupling~\cite{PonceAlvarez2024} break the commutation used in Proposition~\ref{prop:omega}, and their effect on the confound is open.
+
+The critical-brain hypothesis is neither confirmed nor refuted by FC-based model fitting. It calls for a different observable.
+
+\begin{acknowledgments}
+Data were provided by the Human Connectome Project, WU-Minn Consortium (Principal Investigators: David Van Essen and Kamil Ugurbil; 1U54MH091657). Connectomes were obtained from EBRAINS (doi:10.25493/81EV-ZVT). This research received no specific funding.
+\end{acknowledgments}
+
+\section*{Data availability}
+The connectomes are available from EBRAINS (doi:10.25493/81EV-ZVT); the HCP time series are distributed with \texttt{neurolib}. Analysis code, figures and the manuscript source are available at \url{https://github.com/YuririaCP/conectome}; processed results are regenerated by the scripts from the public data.
+
+
+\appendix
+
+\section{Fitting procedures}\label{app:methods}
+
+All analyses use the diffusive model unless stated, noise amplitude $\beta=0.02$, and Fisher-$z$ averaging to form group FC. Scripts for every step are in the repository (\url{https://github.com/YuririaCP/conectome}).
+
+\subsection{Time-series data (7 subjects)}
+
+\emph{Targets.} Signals were band-passed to 0.008--0.08\,Hz with a second-order Butterworth filter applied forward and backward. FCD used windows of 60\,s and steps of 2\,s; metastability excluded 10 samples at each end to avoid edge effects of the Hilbert transform. Natural frequencies $\omega_j$ were set to the regional peak of the band-passed spectrum.
+
+\emph{Model statistics.} Band-passed zero-lag and lagged covariances and regional spectra of the linearization were computed analytically, by integrating the cross-spectral matrix of the Ornstein--Uhlenbeck process against $|H(f)|^4$, where $H$ is the filter response (the square accounts for the forward-backward pass). Nonlinear simulations used Euler--Maruyama integration with step $\mathrm{TR}/8=0.09$\,s ($\mathrm{TR}/20$ in the comparison of linear and nonlinear FC), a 60\,s transient, and the same filter. Linear and nonlinear FC agreed at $r>0.98$ over the fitted range.
+
+\emph{Homogeneous sweep.} $a\in\{-0.2,-0.1,-0.05,-0.02,-0.01,-0.005\}$ and $G\in[0,6]$ in steps of 0.1 with the analytic FC; nonlinear simulations at 25 values of $G$ in $[0,6]$ at the best $a$ (Fig.~\ref{fig:fcd}c).
+
+\emph{Region-wise $a_j$.} L-BFGS-B on $(\log|a_j|,\log G)$ with bounds $|a_j|\in[10^{-4},1]$, $G\in[0.01,10]$, minimizing the mean squared error of FC plus that of the regional autocorrelations at lags of 3, 7, 14 and 28 TR (weight 1), plus $10^{-3}$ times the variance of $\log|a_j|$. Validation: fit on 4 subjects, test on the other 3.
+
+\emph{Effective connectivity.} Starting from $G_0\,\mathrm{SC}$ with $G_0=3.3$ and homogeneous $a=-0.0696$ (the values of the previous step), all off-diagonal weights were updated by
+$C\leftarrow\max\bigl(0,\,C+\varepsilon[(\mathrm{FC}^{0}_{\rm emp}-\mathrm{FC}^{0}_{\rm mod})+(\mathrm{FC}^{\tau}_{\rm emp}-\mathrm{FC}^{\tau}_{\rm mod})]\bigr)$,
+with $\varepsilon=0.004$ and $\tau=2$\,TR, where $\mathrm{FC}^\tau$ is the normalized lagged covariance~\cite{Gilson2016}. The number of iterations (3000) was chosen by performance on the 3 held-out subjects; 88\% of the weights ended at zero. The noise ceiling is the correlation between the group FC of the two subject groups.
+
+\emph{Joint fit of spectra.} Every 10 EC iterations, a damped Newton step per region adjusted $(\omega_j,\log|a_j|)$ to match the centroid and width of the empirical Welch spectrum (segments of 512 samples, normalized on 0--0.12\,Hz). Sensitivities were diagonal, estimated from two global perturbations; steps were clipped to 10\% in $\omega_j$ and 0.2 in $\log|a_j|$; parameters were bounded to $\omega_j/2\pi\in[0.005,0.12]$\,Hz and $|a_j|\in[10^{-3},1]$. ``At the bounds'' in Sec.~\ref{sec:fit} refers to these intervals. The Ornstein--Uhlenbeck variant fixes $\omega_j=0$. The implied $\delta$ was 0.029 (Ornstein--Uhlenbeck, EC and spectra), 0.064--0.070 (region-wise $a_j$ and EC with homogeneous $a$), and 0.146 (Hopf, EC and spectra), in $\mathrm{s}^{-1}$.
+
+\subsection{Connectome data (200 subjects, 800 sessions)}
+
+\emph{Coupling matrices.} Structural connectomes were symmetrized, given zero diagonal, and normalized to mean node strength 1, so that $\theta$ is comparable across connectomes. The group connectome is the mean over all 200 subjects in the one-parameter fits of Sec.~\ref{sec:kappa}, and over subjects 1--100 when it serves as the starting point of the transformed connectomes and of the effective connectivity.
+
+\emph{One-parameter fits.} For each session, $\theta$ (diffusive) or $\rho$ (additive) was fitted by bounded scalar minimization of the mean squared error over the upper triangle of FC, with $\log\theta\in[\log10^{-4},\log10^{3}]$ (or $[\log 10^{-5},\log10^3]$ in the refits with transformed connectomes) and $\rho\in[10^{-4},\,1-10^{-5}]$. GSR, when used, was applied identically to model and data FC by Eq.~\eqref{eq:gsr}. A session is ``at the bound'' when $\kappa<2\times10^{-4}$.
+
+\emph{Transformed connectomes.} We searched $C=\mathrm{SC}^{\alpha}$ with $\alpha\in\{1,0.5,0.25\}$ or $C=\log(1+\mathrm{SC})$, and extra weights $\{1,2,4\}$ on interhemispheric and $\{1,3,10\}$ on homotopic links, selecting by the fit to the group FC of subjects 1--100.
+
+\emph{Symmetric effective connectivity.} From the selected transformed connectome, $C\leftarrow\max(0,\,C+\varepsilon(\mathrm{FC}_{\rm emp}-\mathrm{FC}_{\rm mod}))$ followed by symmetrization, with $\varepsilon=0.02$ and 4000 iterations. The target was the group FC of sessions 1--2 of subjects 1--100, and evaluation used all sessions of subjects 101--200. For additive coupling, $C$ was rescaled after each step so that $\lambda_{\max}(C)\le0.999$.
+
+\emph{Reliability.} ICC(3,1) of $\log\kappa$ over the four sessions, and between days after averaging the two sessions of each day. The control with another subject's connectome used a fixed random permutation of subjects.
+
+\bibliography{refs}
+
+\end{document}

@@ -1,0 +1,496 @@
+%aipnum4-2.bst 2019-01-14 (MD) hand-edited version of apsrev4-1.bst
+%Control: key (0)
+%Control: author (8) initials jnrlst
+%Control: editor formatted (1) identically to author
+%Control: production of article title (0) allowed
+%Control: page (1) range
+%Control: year (1) truncated
+%Control: production of eprint (0) enabled
+\begin{thebibliography}{34}%
+\makeatletter
+\providecommand \@ifxundefined [1]{%
+ \@ifx{#1\undefined}
+}%
+\providecommand \@ifnum [1]{%
+ \ifnum #1\expandafter \@firstoftwo
+ \else \expandafter \@secondoftwo
+ \fi
+}%
+\providecommand \@ifx [1]{%
+ \ifx #1\expandafter \@firstoftwo
+ \else \expandafter \@secondoftwo
+ \fi
+}%
+\providecommand \natexlab [1]{#1}%
+\providecommand \enquote  [1]{``#1''}%
+\providecommand \bibnamefont  [1]{#1}%
+\providecommand \bibfnamefont [1]{#1}%
+\providecommand \citenamefont [1]{#1}%
+\providecommand \href@noop [0]{\@secondoftwo}%
+\providecommand \href [0]{\begingroup \@sanitize@url \@href}%
+\providecommand \@href[1]{\@@startlink{#1}\@@href}%
+\providecommand \@@href[1]{\endgroup#1\@@endlink}%
+\providecommand \@sanitize@url [0]{\catcode `\\12\catcode `\$12\catcode
+  `\&12\catcode `\#12\catcode `\^12\catcode `\_12\catcode `\%12\relax}%
+\providecommand \@@startlink[1]{}%
+\providecommand \@@endlink[0]{}%
+\providecommand \url  [0]{\begingroup\@sanitize@url \@url }%
+\providecommand \@url [1]{\endgroup\@href {#1}{\urlprefix }}%
+\providecommand \urlprefix  [0]{URL }%
+\providecommand \Eprint [0]{\href }%
+\providecommand \doibase [0]{https://doi.org/}%
+\providecommand \selectlanguage [0]{\@gobble}%
+\providecommand \bibinfo  [0]{\@secondoftwo}%
+\providecommand \bibfield  [0]{\@secondoftwo}%
+\providecommand \translation [1]{[#1]}%
+\providecommand \BibitemOpen [0]{}%
+\providecommand \bibitemStop [0]{}%
+\providecommand \bibitemNoStop [0]{.\EOS\space}%
+\providecommand \EOS [0]{\spacefactor3000\relax}%
+\providecommand \BibitemShut  [1]{\csname bibitem#1\endcsname}%
+\let\auto@bib@innerbib\@empty
+%</preamble>
+\bibitem [{\citenamefont {O'Byrne}\ and\ \citenamefont
+  {Jerbi}(2022)}]{OByrne2022}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {J.}~\bibnamefont
+  {O'Byrne}}\ and\ \bibinfo {author} {\bibfnamefont {K.}~\bibnamefont
+  {Jerbi}},\ }\bibfield  {title} {\enquote {\bibinfo {title} {How critical is
+  brain criticality?}}\ }\href {https://doi.org/10.1016/j.tins.2022.08.007}
+  {\bibfield  {journal} {\bibinfo  {journal} {Trends in Neurosciences}\
+  }\textbf {\bibinfo {volume} {45}},\ \bibinfo {pages} {820--837} (\bibinfo
+  {year} {2022})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Wilting}\ and\ \citenamefont
+  {Priesemann}(2018)}]{Wilting2018}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {J.}~\bibnamefont
+  {Wilting}}\ and\ \bibinfo {author} {\bibfnamefont {V.}~\bibnamefont
+  {Priesemann}},\ }\bibfield  {title} {\enquote {\bibinfo {title} {Inferring
+  collective dynamical states from widely unobserved systems},}\ }\href
+  {https://doi.org/10.1038/s41467-018-04725-4} {\bibfield  {journal} {\bibinfo
+  {journal} {Nature Communications}\ }\textbf {\bibinfo {volume} {9}},\
+  \bibinfo {pages} {2325} (\bibinfo {year} {2018})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Cabral}\ \emph {et~al.}(2011)\citenamefont {Cabral},
+  \citenamefont {Hugues}, \citenamefont {Sporns},\ and\ \citenamefont
+  {Deco}}]{Cabral2011}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {J.}~\bibnamefont
+  {Cabral}}, \bibinfo {author} {\bibfnamefont {E.}~\bibnamefont {Hugues}},
+  \bibinfo {author} {\bibfnamefont {O.}~\bibnamefont {Sporns}},\ and\ \bibinfo
+  {author} {\bibfnamefont {G.}~\bibnamefont {Deco}},\ }\bibfield  {title}
+  {\enquote {\bibinfo {title} {Role of local network oscillations in
+  resting-state functional connectivity},}\ }\href
+  {https://doi.org/10.1016/j.neuroimage.2011.04.010} {\bibfield  {journal}
+  {\bibinfo  {journal} {NeuroImage}\ }\textbf {\bibinfo {volume} {57}},\
+  \bibinfo {pages} {130--139} (\bibinfo {year} {2011})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Deco}\ \emph
+  {et~al.}(2017{\natexlab{a}})\citenamefont {Deco}, \citenamefont
+  {Kringelbach}, \citenamefont {Jirsa},\ and\ \citenamefont
+  {Ritter}}]{Deco2017dynamics}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {G.}~\bibnamefont
+  {Deco}}, \bibinfo {author} {\bibfnamefont {M.~L.}\ \bibnamefont
+  {Kringelbach}}, \bibinfo {author} {\bibfnamefont {V.~K.}\ \bibnamefont
+  {Jirsa}},\ and\ \bibinfo {author} {\bibfnamefont {P.}~\bibnamefont
+  {Ritter}},\ }\bibfield  {title} {\enquote {\bibinfo {title} {The dynamics of
+  resting fluctuations in the brain: metastability and its dynamical cortical
+  core},}\ }\href {https://doi.org/10.1038/s41598-017-03073-5} {\bibfield
+  {journal} {\bibinfo  {journal} {Scientific Reports}\ }\textbf {\bibinfo
+  {volume} {7}},\ \bibinfo {pages} {3095} (\bibinfo {year}
+  {2017}{\natexlab{a}})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Deco}\ \emph
+  {et~al.}(2017{\natexlab{b}})\citenamefont {Deco}, \citenamefont {Cabral},
+  \citenamefont {Woolrich}, \citenamefont {Stevner}, \citenamefont {van
+  Hartevelt},\ and\ \citenamefont {Kringelbach}}]{Deco2017single}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {G.}~\bibnamefont
+  {Deco}}, \bibinfo {author} {\bibfnamefont {J.}~\bibnamefont {Cabral}},
+  \bibinfo {author} {\bibfnamefont {M.~W.}\ \bibnamefont {Woolrich}}, \bibinfo
+  {author} {\bibfnamefont {A.~B.~A.}\ \bibnamefont {Stevner}}, \bibinfo
+  {author} {\bibfnamefont {T.~J.}\ \bibnamefont {van Hartevelt}},\ and\
+  \bibinfo {author} {\bibfnamefont {M.~L.}\ \bibnamefont {Kringelbach}},\
+  }\bibfield  {title} {\enquote {\bibinfo {title} {Single or multiple frequency
+  generators in on-going brain activity: A mechanistic whole-brain model of
+  empirical {MEG} data},}\ }\href
+  {https://doi.org/10.1016/j.neuroimage.2017.03.023} {\bibfield  {journal}
+  {\bibinfo  {journal} {NeuroImage}\ }\textbf {\bibinfo {volume} {152}},\
+  \bibinfo {pages} {538--550} (\bibinfo {year}
+  {2017}{\natexlab{b}})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Ponce-Alvarez}\ and\ \citenamefont
+  {Deco}(2024)}]{PonceAlvarez2024}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {A.}~\bibnamefont
+  {Ponce-Alvarez}}\ and\ \bibinfo {author} {\bibfnamefont {G.}~\bibnamefont
+  {Deco}},\ }\bibfield  {title} {\enquote {\bibinfo {title} {The {Hopf}
+  whole-brain model and its linear approximation},}\ }\href
+  {https://doi.org/10.1038/s41598-024-53105-0} {\bibfield  {journal} {\bibinfo
+  {journal} {Scientific Reports}\ }\textbf {\bibinfo {volume} {14}},\ \bibinfo
+  {pages} {2615} (\bibinfo {year} {2024})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Jobst}\ \emph {et~al.}(2017)\citenamefont {Jobst},
+  \citenamefont {Hindriks}, \citenamefont {Laufs}, \citenamefont
+  {Tagliazucchi}, \citenamefont {Hahn}, \citenamefont {Ponce-Alvarez},
+  \citenamefont {Stevner}, \citenamefont {Kringelbach},\ and\ \citenamefont
+  {Deco}}]{Jobst2017}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {B.~M.}\ \bibnamefont
+  {Jobst}}, \bibinfo {author} {\bibfnamefont {R.}~\bibnamefont {Hindriks}},
+  \bibinfo {author} {\bibfnamefont {H.}~\bibnamefont {Laufs}}, \bibinfo
+  {author} {\bibfnamefont {E.}~\bibnamefont {Tagliazucchi}}, \bibinfo {author}
+  {\bibfnamefont {G.}~\bibnamefont {Hahn}}, \bibinfo {author} {\bibfnamefont
+  {A.}~\bibnamefont {Ponce-Alvarez}}, \bibinfo {author} {\bibfnamefont
+  {A.~B.~A.}\ \bibnamefont {Stevner}}, \bibinfo {author} {\bibfnamefont
+  {M.~L.}\ \bibnamefont {Kringelbach}},\ and\ \bibinfo {author} {\bibfnamefont
+  {G.}~\bibnamefont {Deco}},\ }\bibfield  {title} {\enquote {\bibinfo {title}
+  {Increased stability and breakdown of brain effective connectivity during
+  slow-wave sleep: mechanistic insights from whole-brain computational
+  modelling},}\ }\href {https://doi.org/10.1038/s41598-017-04522-x} {\bibfield
+  {journal} {\bibinfo  {journal} {Scientific Reports}\ }\textbf {\bibinfo
+  {volume} {7}},\ \bibinfo {pages} {4634} (\bibinfo {year} {2017})}\BibitemShut
+  {NoStop}%
+\bibitem [{\citenamefont {Haimovici}\ \emph {et~al.}(2013)\citenamefont
+  {Haimovici}, \citenamefont {Tagliazucchi}, \citenamefont {Balenzuela},\ and\
+  \citenamefont {Chialvo}}]{Haimovici2013}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {A.}~\bibnamefont
+  {Haimovici}}, \bibinfo {author} {\bibfnamefont {E.}~\bibnamefont
+  {Tagliazucchi}}, \bibinfo {author} {\bibfnamefont {P.}~\bibnamefont
+  {Balenzuela}},\ and\ \bibinfo {author} {\bibfnamefont {D.~R.}\ \bibnamefont
+  {Chialvo}},\ }\bibfield  {title} {\enquote {\bibinfo {title} {Brain
+  organization into resting state networks emerges at criticality on a model of
+  the human connectome},}\ }\href
+  {https://doi.org/10.1103/PhysRevLett.110.178101} {\bibfield  {journal}
+  {\bibinfo  {journal} {Physical Review Letters}\ }\textbf {\bibinfo {volume}
+  {110}},\ \bibinfo {pages} {178101} (\bibinfo {year} {2013})}\BibitemShut
+  {NoStop}%
+\bibitem [{\citenamefont {Murphy}\ and\ \citenamefont
+  {Fox}(2017)}]{Murphy2017}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {K.}~\bibnamefont
+  {Murphy}}\ and\ \bibinfo {author} {\bibfnamefont {M.~D.}\ \bibnamefont
+  {Fox}},\ }\bibfield  {title} {\enquote {\bibinfo {title} {Towards a consensus
+  regarding global signal regression for resting state functional connectivity
+  {MRI}},}\ }\href {https://doi.org/10.1016/j.neuroimage.2016.11.052}
+  {\bibfield  {journal} {\bibinfo  {journal} {NeuroImage}\ }\textbf {\bibinfo
+  {volume} {154}},\ \bibinfo {pages} {169--173} (\bibinfo {year}
+  {2017})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Liu}, \citenamefont {Nalci},\ and\ \citenamefont
+  {Falahpour}(2017)}]{Liu2017}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {T.~T.}\ \bibnamefont
+  {Liu}}, \bibinfo {author} {\bibfnamefont {A.}~\bibnamefont {Nalci}},\ and\
+  \bibinfo {author} {\bibfnamefont {M.}~\bibnamefont {Falahpour}},\ }\bibfield
+  {title} {\enquote {\bibinfo {title} {The global signal in {fMRI}: Nuisance or
+  information?}}\ }\href {https://doi.org/10.1016/j.neuroimage.2017.02.036}
+  {\bibfield  {journal} {\bibinfo  {journal} {NeuroImage}\ }\textbf {\bibinfo
+  {volume} {150}},\ \bibinfo {pages} {213--229} (\bibinfo {year}
+  {2017})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Gal{\'a}n}(2008)}]{Galan2008}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {R.~F.}\ \bibnamefont
+  {Gal{\'a}n}},\ }\bibfield  {title} {\enquote {\bibinfo {title} {On how
+  network architecture determines the dominant patterns of spontaneous neural
+  activity},}\ }\href {https://doi.org/10.1371/journal.pone.0002148} {\bibfield
+   {journal} {\bibinfo  {journal} {PLoS ONE}\ }\textbf {\bibinfo {volume}
+  {3}},\ \bibinfo {pages} {e2148} (\bibinfo {year} {2008})}\BibitemShut
+  {NoStop}%
+\bibitem [{\citenamefont {Saggio}, \citenamefont {Ritter},\ and\ \citenamefont
+  {Jirsa}(2016)}]{Saggio2016}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {M.~L.}\ \bibnamefont
+  {Saggio}}, \bibinfo {author} {\bibfnamefont {P.}~\bibnamefont {Ritter}},\
+  and\ \bibinfo {author} {\bibfnamefont {V.~K.}\ \bibnamefont {Jirsa}},\
+  }\bibfield  {title} {\enquote {\bibinfo {title} {Analytical operations relate
+  structural and functional connectivity in the brain},}\ }\href
+  {https://doi.org/10.1371/journal.pone.0157292} {\bibfield  {journal}
+  {\bibinfo  {journal} {PLoS ONE}\ }\textbf {\bibinfo {volume} {11}},\ \bibinfo
+  {pages} {e0157292} (\bibinfo {year} {2016})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Abdelnour}, \citenamefont {Voss},\ and\ \citenamefont
+  {Raj}(2014)}]{Abdelnour2014}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {F.}~\bibnamefont
+  {Abdelnour}}, \bibinfo {author} {\bibfnamefont {H.~U.}\ \bibnamefont
+  {Voss}},\ and\ \bibinfo {author} {\bibfnamefont {A.}~\bibnamefont {Raj}},\
+  }\bibfield  {title} {\enquote {\bibinfo {title} {Network diffusion accurately
+  models the relationship between structural and functional brain connectivity
+  networks},}\ }\href {https://doi.org/10.1016/j.neuroimage.2013.12.039}
+  {\bibfield  {journal} {\bibinfo  {journal} {NeuroImage}\ }\textbf {\bibinfo
+  {volume} {90}},\ \bibinfo {pages} {335--347} (\bibinfo {year}
+  {2014})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Gilson}\ \emph {et~al.}(2016)\citenamefont {Gilson},
+  \citenamefont {Moreno-Bote}, \citenamefont {Ponce-Alvarez}, \citenamefont
+  {Ritter},\ and\ \citenamefont {Deco}}]{Gilson2016}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {M.}~\bibnamefont
+  {Gilson}}, \bibinfo {author} {\bibfnamefont {R.}~\bibnamefont {Moreno-Bote}},
+  \bibinfo {author} {\bibfnamefont {A.}~\bibnamefont {Ponce-Alvarez}}, \bibinfo
+  {author} {\bibfnamefont {P.}~\bibnamefont {Ritter}},\ and\ \bibinfo {author}
+  {\bibfnamefont {G.}~\bibnamefont {Deco}},\ }\bibfield  {title} {\enquote
+  {\bibinfo {title} {Estimation of directed effective connectivity from {fMRI}
+  functional connectivity hints at asymmetries of cortical connectome},}\
+  }\href {https://doi.org/10.1371/journal.pcbi.1004762} {\bibfield  {journal}
+  {\bibinfo  {journal} {PLoS Computational Biology}\ }\textbf {\bibinfo
+  {volume} {12}},\ \bibinfo {pages} {e1004762} (\bibinfo {year}
+  {2016})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Schiefer}\ \emph {et~al.}(2018)\citenamefont
+  {Schiefer}, \citenamefont {Niederb{\"u}hl}, \citenamefont {Pernice},
+  \citenamefont {Lennartz}, \citenamefont {Hennig}, \citenamefont {LeVan},\
+  and\ \citenamefont {Rotter}}]{Schiefer2018}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {J.}~\bibnamefont
+  {Schiefer}}, \bibinfo {author} {\bibfnamefont {A.}~\bibnamefont
+  {Niederb{\"u}hl}}, \bibinfo {author} {\bibfnamefont {V.}~\bibnamefont
+  {Pernice}}, \bibinfo {author} {\bibfnamefont {C.}~\bibnamefont {Lennartz}},
+  \bibinfo {author} {\bibfnamefont {J.}~\bibnamefont {Hennig}}, \bibinfo
+  {author} {\bibfnamefont {P.}~\bibnamefont {LeVan}},\ and\ \bibinfo {author}
+  {\bibfnamefont {S.}~\bibnamefont {Rotter}},\ }\bibfield  {title} {\enquote
+  {\bibinfo {title} {From correlation to causation: Estimating effective
+  connectivity from zero-lag covariances of brain signals},}\ }\href
+  {https://doi.org/10.1371/journal.pcbi.1006056} {\bibfield  {journal}
+  {\bibinfo  {journal} {PLoS Computational Biology}\ }\textbf {\bibinfo
+  {volume} {14}},\ \bibinfo {pages} {e1006056} (\bibinfo {year}
+  {2018})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Alexandersen}\ \emph {et~al.}(2025)\citenamefont
+  {Alexandersen}, \citenamefont {Douw}, \citenamefont {Zimmermann},
+  \citenamefont {Bick},\ and\ \citenamefont {Goriely}}]{Alexandersen2025}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {C.~G.}\ \bibnamefont
+  {Alexandersen}}, \bibinfo {author} {\bibfnamefont {L.}~\bibnamefont {Douw}},
+  \bibinfo {author} {\bibfnamefont {M.~L.~M.}\ \bibnamefont {Zimmermann}},
+  \bibinfo {author} {\bibfnamefont {C.}~\bibnamefont {Bick}},\ and\ \bibinfo
+  {author} {\bibfnamefont {A.}~\bibnamefont {Goriely}},\ }\bibfield  {title}
+  {\enquote {\bibinfo {title} {Functional connectotomy of a whole-brain model
+  reveals tumor-induced alterations to neuronal dynamics in glioma patients},}\
+  }\href {https://doi.org/10.1162/netn_a_00426} {\bibfield  {journal} {\bibinfo
+   {journal} {Network Neuroscience}\ }\textbf {\bibinfo {volume} {9}},\
+  \bibinfo {pages} {280--302} (\bibinfo {year} {2025})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Aquino}\ \emph {et~al.}(2022)\citenamefont {Aquino},
+  \citenamefont {Fulcher}, \citenamefont {Oldham}, \citenamefont {Parkes},
+  \citenamefont {Gollo}, \citenamefont {Deco},\ and\ \citenamefont
+  {Fornito}}]{Aquino2022}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {K.~M.}\ \bibnamefont
+  {Aquino}}, \bibinfo {author} {\bibfnamefont {B.}~\bibnamefont {Fulcher}},
+  \bibinfo {author} {\bibfnamefont {S.}~\bibnamefont {Oldham}}, \bibinfo
+  {author} {\bibfnamefont {L.}~\bibnamefont {Parkes}}, \bibinfo {author}
+  {\bibfnamefont {L.}~\bibnamefont {Gollo}}, \bibinfo {author} {\bibfnamefont
+  {G.}~\bibnamefont {Deco}},\ and\ \bibinfo {author} {\bibfnamefont
+  {A.}~\bibnamefont {Fornito}},\ }\bibfield  {title} {\enquote {\bibinfo
+  {title} {On the intersection between data quality and dynamical modelling of
+  large-scale {fMRI} signals},}\ }\href
+  {https://doi.org/10.1016/j.neuroimage.2022.119051} {\bibfield  {journal}
+  {\bibinfo  {journal} {NeuroImage}\ }\textbf {\bibinfo {volume} {256}},\
+  \bibinfo {pages} {119051} (\bibinfo {year} {2022})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Li{\'e}geois}\ \emph {et~al.}(2017)\citenamefont
+  {Li{\'e}geois}, \citenamefont {Laumann}, \citenamefont {Snyder},
+  \citenamefont {Zhou},\ and\ \citenamefont {Yeo}}]{Liegeois2017}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {R.}~\bibnamefont
+  {Li{\'e}geois}}, \bibinfo {author} {\bibfnamefont {T.~O.}\ \bibnamefont
+  {Laumann}}, \bibinfo {author} {\bibfnamefont {A.~Z.}\ \bibnamefont {Snyder}},
+  \bibinfo {author} {\bibfnamefont {J.}~\bibnamefont {Zhou}},\ and\ \bibinfo
+  {author} {\bibfnamefont {B.~T.~T.}\ \bibnamefont {Yeo}},\ }\bibfield  {title}
+  {\enquote {\bibinfo {title} {Interpreting temporal fluctuations in
+  resting-state functional connectivity {MRI}},}\ }\href
+  {https://doi.org/10.1016/j.neuroimage.2017.09.012} {\bibfield  {journal}
+  {\bibinfo  {journal} {NeuroImage}\ }\textbf {\bibinfo {volume} {163}},\
+  \bibinfo {pages} {437--455} (\bibinfo {year} {2017})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Berman}\ and\ \citenamefont
+  {Plemmons}(1994)}]{Berman1994}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {A.}~\bibnamefont
+  {Berman}}\ and\ \bibinfo {author} {\bibfnamefont {R.~J.}\ \bibnamefont
+  {Plemmons}},\ }\href@noop {} {\emph {\bibinfo {title} {Nonnegative Matrices
+  in the Mathematical Sciences}}}\ (\bibinfo  {publisher} {SIAM},\ \bibinfo
+  {address} {Philadelphia},\ \bibinfo {year} {1994})\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {P{\'o}lya}\ and\ \citenamefont {Szeg{\H
+  o}}(1925)}]{PolyaSzego1925}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {G.}~\bibnamefont
+  {P{\'o}lya}}\ and\ \bibinfo {author} {\bibfnamefont {G.}~\bibnamefont
+  {Szeg{\H o}}},\ }\href@noop {} {\emph {\bibinfo {title} {Aufgaben und
+  Lehrs{\"a}tze aus der Analysis}}},\ Vol.~\bibinfo {volume} {1}\ (\bibinfo
+  {publisher} {Springer},\ \bibinfo {address} {Berlin},\ \bibinfo {year}
+  {1925})\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Yu}, \citenamefont {Wang},\ and\ \citenamefont
+  {Samworth}(2015)}]{Yu2015}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {Y.}~\bibnamefont
+  {Yu}}, \bibinfo {author} {\bibfnamefont {T.}~\bibnamefont {Wang}},\ and\
+  \bibinfo {author} {\bibfnamefont {R.~J.}\ \bibnamefont {Samworth}},\
+  }\bibfield  {title} {\enquote {\bibinfo {title} {A useful variant of the
+  {Davis--Kahan} theorem for statisticians},}\ }\href
+  {https://doi.org/10.1093/biomet/asv008} {\bibfield  {journal} {\bibinfo
+  {journal} {Biometrika}\ }\textbf {\bibinfo {volume} {102}},\ \bibinfo {pages}
+  {315--323} (\bibinfo {year} {2015})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Klein}\ and\ \citenamefont
+  {Randi{\'c}}(1993)}]{Klein1993}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {D.~J.}\ \bibnamefont
+  {Klein}}\ and\ \bibinfo {author} {\bibfnamefont {M.}~\bibnamefont
+  {Randi{\'c}}},\ }\bibfield  {title} {\enquote {\bibinfo {title} {Resistance
+  distance},}\ }\href {https://doi.org/10.1007/BF01164627} {\bibfield
+  {journal} {\bibinfo  {journal} {Journal of Mathematical Chemistry}\ }\textbf
+  {\bibinfo {volume} {12}},\ \bibinfo {pages} {81--95} (\bibinfo {year}
+  {1993})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Van~Essen}\ \emph {et~al.}(2013)\citenamefont
+  {Van~Essen}, \citenamefont {Smith}, \citenamefont {Barch}, \citenamefont
+  {Behrens}, \citenamefont {Yacoub}, \citenamefont {Ugurbil},\ and\
+  \citenamefont {{WU-Minn HCP Consortium}}}]{VanEssen2013}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {D.~C.}\ \bibnamefont
+  {Van~Essen}}, \bibinfo {author} {\bibfnamefont {S.~M.}\ \bibnamefont
+  {Smith}}, \bibinfo {author} {\bibfnamefont {D.~M.}\ \bibnamefont {Barch}},
+  \bibinfo {author} {\bibfnamefont {T.~E.~J.}\ \bibnamefont {Behrens}},
+  \bibinfo {author} {\bibfnamefont {E.}~\bibnamefont {Yacoub}}, \bibinfo
+  {author} {\bibfnamefont {K.}~\bibnamefont {Ugurbil}},\ and\ \bibinfo {author}
+  {\bibnamefont {{WU-Minn HCP Consortium}}},\ }\bibfield  {title} {\enquote
+  {\bibinfo {title} {The {WU-Minn} {Human Connectome Project}: An overview},}\
+  }\href {https://doi.org/10.1016/j.neuroimage.2013.05.041} {\bibfield
+  {journal} {\bibinfo  {journal} {NeuroImage}\ }\textbf {\bibinfo {volume}
+  {80}},\ \bibinfo {pages} {62--79} (\bibinfo {year} {2013})}\BibitemShut
+  {NoStop}%
+\bibitem [{\citenamefont {Cakan}, \citenamefont {Jajcay},\ and\ \citenamefont
+  {Obermayer}(2023)}]{Cakan2023}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {C.}~\bibnamefont
+  {Cakan}}, \bibinfo {author} {\bibfnamefont {N.}~\bibnamefont {Jajcay}},\ and\
+  \bibinfo {author} {\bibfnamefont {K.}~\bibnamefont {Obermayer}},\ }\bibfield
+  {title} {\enquote {\bibinfo {title} {neurolib: A simulation framework for
+  whole-brain neural mass modeling},}\ }\href
+  {https://doi.org/10.1007/s12559-021-09931-9} {\bibfield  {journal} {\bibinfo
+  {journal} {Cognitive Computation}\ }\textbf {\bibinfo {volume} {15}},\
+  \bibinfo {pages} {1132--1152} (\bibinfo {year} {2023})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Domhof}\ \emph
+  {et~al.}(2021{\natexlab{a}})\citenamefont {Domhof}, \citenamefont {Jung},
+  \citenamefont {Eickhoff},\ and\ \citenamefont {Popovych}}]{DomhofData2021}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {J.~W.~M.}\
+  \bibnamefont {Domhof}}, \bibinfo {author} {\bibfnamefont {K.}~\bibnamefont
+  {Jung}}, \bibinfo {author} {\bibfnamefont {S.~B.}\ \bibnamefont {Eickhoff}},\
+  and\ \bibinfo {author} {\bibfnamefont {O.~V.}\ \bibnamefont {Popovych}},\
+  }\href {https://doi.org/10.25493/81EV-ZVT} {\enquote {\bibinfo {title}
+  {Parcellation-based structural and resting-state functional brain connectomes
+  of a healthy cohort},}\ }\bibinfo {howpublished} {EBRAINS dataset} (\bibinfo
+  {year} {2021}{\natexlab{a}})\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Domhof}\ \emph
+  {et~al.}(2021{\natexlab{b}})\citenamefont {Domhof}, \citenamefont {Jung},
+  \citenamefont {Eickhoff},\ and\ \citenamefont {Popovych}}]{Domhof2021}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {J.~W.~M.}\
+  \bibnamefont {Domhof}}, \bibinfo {author} {\bibfnamefont {K.}~\bibnamefont
+  {Jung}}, \bibinfo {author} {\bibfnamefont {S.~B.}\ \bibnamefont {Eickhoff}},\
+  and\ \bibinfo {author} {\bibfnamefont {O.~V.}\ \bibnamefont {Popovych}},\
+  }\bibfield  {title} {\enquote {\bibinfo {title} {Parcellation-induced
+  variation of empirical and simulated brain connectomes at group and subject
+  levels},}\ }\href {https://doi.org/10.1162/netn_a_00202} {\bibfield
+  {journal} {\bibinfo  {journal} {Network Neuroscience}\ }\textbf {\bibinfo
+  {volume} {5}},\ \bibinfo {pages} {798--830} (\bibinfo {year}
+  {2021}{\natexlab{b}})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Schaefer}\ \emph {et~al.}(2018)\citenamefont
+  {Schaefer}, \citenamefont {Kong}, \citenamefont {Gordon}, \citenamefont
+  {Laumann}, \citenamefont {Zuo}, \citenamefont {Holmes}, \citenamefont
+  {Eickhoff},\ and\ \citenamefont {Yeo}}]{Schaefer2018}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {A.}~\bibnamefont
+  {Schaefer}}, \bibinfo {author} {\bibfnamefont {R.}~\bibnamefont {Kong}},
+  \bibinfo {author} {\bibfnamefont {E.~M.}\ \bibnamefont {Gordon}}, \bibinfo
+  {author} {\bibfnamefont {T.~O.}\ \bibnamefont {Laumann}}, \bibinfo {author}
+  {\bibfnamefont {X.-N.}\ \bibnamefont {Zuo}}, \bibinfo {author} {\bibfnamefont
+  {A.~J.}\ \bibnamefont {Holmes}}, \bibinfo {author} {\bibfnamefont {S.~B.}\
+  \bibnamefont {Eickhoff}},\ and\ \bibinfo {author} {\bibfnamefont {B.~T.~T.}\
+  \bibnamefont {Yeo}},\ }\bibfield  {title} {\enquote {\bibinfo {title}
+  {Local-global parcellation of the human cerebral cortex from intrinsic
+  functional connectivity {MRI}},}\ }\href
+  {https://doi.org/10.1093/cercor/bhx179} {\bibfield  {journal} {\bibinfo
+  {journal} {Cerebral Cortex}\ }\textbf {\bibinfo {volume} {28}},\ \bibinfo
+  {pages} {3095--3114} (\bibinfo {year} {2018})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Hansen}\ \emph {et~al.}(2015)\citenamefont {Hansen},
+  \citenamefont {Battaglia}, \citenamefont {Spiegler}, \citenamefont {Deco},\
+  and\ \citenamefont {Jirsa}}]{Hansen2015}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {E.~C.~A.}\
+  \bibnamefont {Hansen}}, \bibinfo {author} {\bibfnamefont {D.}~\bibnamefont
+  {Battaglia}}, \bibinfo {author} {\bibfnamefont {A.}~\bibnamefont {Spiegler}},
+  \bibinfo {author} {\bibfnamefont {G.}~\bibnamefont {Deco}},\ and\ \bibinfo
+  {author} {\bibfnamefont {V.~K.}\ \bibnamefont {Jirsa}},\ }\bibfield  {title}
+  {\enquote {\bibinfo {title} {Functional connectivity dynamics: Modeling the
+  switching behavior of the resting state},}\ }\href
+  {https://doi.org/10.1016/j.neuroimage.2014.11.001} {\bibfield  {journal}
+  {\bibinfo  {journal} {NeuroImage}\ }\textbf {\bibinfo {volume} {105}},\
+  \bibinfo {pages} {525--535} (\bibinfo {year} {2015})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Shanahan}(2010)}]{Shanahan2010}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {M.}~\bibnamefont
+  {Shanahan}},\ }\bibfield  {title} {\enquote {\bibinfo {title} {Metastable
+  chimera states in community-structured oscillator networks},}\ }\href
+  {https://doi.org/10.1063/1.3305451} {\bibfield  {journal} {\bibinfo
+  {journal} {Chaos}\ }\textbf {\bibinfo {volume} {20}},\ \bibinfo {pages}
+  {013108} (\bibinfo {year} {2010})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Prichard}\ and\ \citenamefont
+  {Theiler}(1994)}]{Prichard1994}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {D.}~\bibnamefont
+  {Prichard}}\ and\ \bibinfo {author} {\bibfnamefont {J.}~\bibnamefont
+  {Theiler}},\ }\bibfield  {title} {\enquote {\bibinfo {title} {Generating
+  surrogate data for time series with several simultaneously measured
+  variables},}\ }\href {https://doi.org/10.1103/PhysRevLett.73.951} {\bibfield
+  {journal} {\bibinfo  {journal} {Physical Review Letters}\ }\textbf {\bibinfo
+  {volume} {73}},\ \bibinfo {pages} {951--954} (\bibinfo {year}
+  {1994})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Lauritzen}(1996)}]{Lauritzen1996}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {S.~L.}\ \bibnamefont
+  {Lauritzen}},\ }\href@noop {} {\emph {\bibinfo {title} {Graphical Models}}}\
+  (\bibinfo  {publisher} {Oxford University Press},\ \bibinfo {address}
+  {Oxford},\ \bibinfo {year} {1996})\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Scheffer}\ \emph {et~al.}(2009)\citenamefont
+  {Scheffer}, \citenamefont {Bascompte}, \citenamefont {Brock}, \citenamefont
+  {Brovkin}, \citenamefont {Carpenter}, \citenamefont {Dakos}, \citenamefont
+  {Held}, \citenamefont {van Nes}, \citenamefont {Rietkerk},\ and\
+  \citenamefont {Sugihara}}]{Scheffer2009}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {M.}~\bibnamefont
+  {Scheffer}}, \bibinfo {author} {\bibfnamefont {J.}~\bibnamefont {Bascompte}},
+  \bibinfo {author} {\bibfnamefont {W.~A.}\ \bibnamefont {Brock}}, \bibinfo
+  {author} {\bibfnamefont {V.}~\bibnamefont {Brovkin}}, \bibinfo {author}
+  {\bibfnamefont {S.~R.}\ \bibnamefont {Carpenter}}, \bibinfo {author}
+  {\bibfnamefont {V.}~\bibnamefont {Dakos}}, \bibinfo {author} {\bibfnamefont
+  {H.}~\bibnamefont {Held}}, \bibinfo {author} {\bibfnamefont {E.~H.}\
+  \bibnamefont {van Nes}}, \bibinfo {author} {\bibfnamefont {M.}~\bibnamefont
+  {Rietkerk}},\ and\ \bibinfo {author} {\bibfnamefont {G.}~\bibnamefont
+  {Sugihara}},\ }\bibfield  {title} {\enquote {\bibinfo {title} {Early-warning
+  signals for critical transitions},}\ }\href
+  {https://doi.org/10.1038/nature08227} {\bibfield  {journal} {\bibinfo
+  {journal} {Nature}\ }\textbf {\bibinfo {volume} {461}},\ \bibinfo {pages}
+  {53--59} (\bibinfo {year} {2009})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Rabuffo}\ \emph {et~al.}(2025)\citenamefont
+  {Rabuffo}, \citenamefont {Bozzo}, \citenamefont {Nguyen}, \citenamefont
+  {Depannemaecker}, \citenamefont {Pompili}, \citenamefont {Gollo},
+  \citenamefont {Fukai}, \citenamefont {Sorrentino},\ and\ \citenamefont
+  {Dalla~Porta}}]{Rabuffo2025}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {G.}~\bibnamefont
+  {Rabuffo}}, \bibinfo {author} {\bibfnamefont {P.}~\bibnamefont {Bozzo}},
+  \bibinfo {author} {\bibfnamefont {B.}~\bibnamefont {Nguyen}}, \bibinfo
+  {author} {\bibfnamefont {D.}~\bibnamefont {Depannemaecker}}, \bibinfo
+  {author} {\bibfnamefont {M.~N.}\ \bibnamefont {Pompili}}, \bibinfo {author}
+  {\bibfnamefont {L.~L.}\ \bibnamefont {Gollo}}, \bibinfo {author}
+  {\bibfnamefont {T.}~\bibnamefont {Fukai}}, \bibinfo {author} {\bibfnamefont
+  {P.}~\bibnamefont {Sorrentino}},\ and\ \bibinfo {author} {\bibfnamefont
+  {L.}~\bibnamefont {Dalla~Porta}},\ }\href
+  {https://doi.org/10.64898/2025.12.11.693658} {\enquote {\bibinfo {title} {The
+  connectome modulates critical brain dynamics across local and global
+  scales},}\ }\bibinfo {howpublished} {bioRxiv} (\bibinfo {year}
+  {2025})\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Du}\ \emph {et~al.}(2026)\citenamefont {Du},
+  \citenamefont {Liardi}, \citenamefont {Rajpal},\ and\ \citenamefont
+  {Jensen}}]{Du2026}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {Y.}~\bibnamefont
+  {Du}}, \bibinfo {author} {\bibfnamefont {A.}~\bibnamefont {Liardi}}, \bibinfo
+  {author} {\bibfnamefont {H.}~\bibnamefont {Rajpal}},\ and\ \bibinfo {author}
+  {\bibfnamefont {H.~J.}\ \bibnamefont {Jensen}},\ }\href@noop {} {\enquote
+  {\bibinfo {title} {Fisher information metric as a model-free measure of
+  proximity to criticality in neural systems},}\ }\bibinfo {howpublished}
+  {arXiv:2609.07624} (\bibinfo {year} {2026})\BibitemShut {NoStop}%
+\end{thebibliography}%
