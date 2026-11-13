@@ -10,14 +10,20 @@ import matplotlib as mpl
 import matplotlib.pyplot as plt
 
 ROOT = Path(__file__).resolve().parents[1]
-d = np.load(ROOT / "results" / "nonlinear_regimes.npz")
-A, GS, DISP, Fr, Fg, SY = d["A"], d["GS"], d["DISP"], d["Fr"].astype(float), d["Fg"].astype(float), d["SY"]
+files = [ROOT / "results" / "nonlinear_regimes.npz"] + sorted((ROOT / "results").glob("nonlinear_regimes_seeds*.npz"))
+ds = [np.load(f) for f in files]
+d = ds[0]
+A, GS, DISP = d["A"], d["GS"], d["DISP"]
+Fr = np.concatenate([x["Fr"].astype(float) for x in ds], axis=3)       # (G, s, a, seeds, pairs)
+Fg = np.concatenate([x["Fg"].astype(float) for x in ds], axis=3)
+SY = np.concatenate([x["SY"] for x in ds], axis=3)
+print(f"{Fr.shape[3]} realizations per point from {len(files)} files")
 mid = (A[:-1] + A[1:]) / 2
 da = np.diff(A)
 
 
 def change(F):
-    """noise-corrected rms change between neighbouring a and its noise level (2 realizations)."""
+    """noise-corrected rms change between neighbouring a and its noise level (K realizations)."""
     m = F.mean(-2)
     raw = np.sqrt(np.mean(np.diff(m, axis=-2) ** 2, -1))
     K = F.shape[-2]
@@ -42,7 +48,18 @@ print("\nnon-global phase coherence (PLVrel) at a=-0.05 / max over a>0, and R at
 for i, G in enumerate(GS):
     for j, s in enumerate(DISP):
         print(f"G={G} s={s}: PLVrel {SYm[i, j, 0, 2]:.3f} -> {SYm[i, j, A > 0, 2].max():.3f}   R(a=0.05) {SYm[i, j, -1, 0]:.3f}")
-np.savez(ROOT / "results" / "regimes_summary.npz", mid=mid, s_raw=s_raw, n_raw=n_raw, s_gsr=s_gsr, n_gsr=n_gsr, SYm=SYm)
+# split-half replication: the same statistic from two disjoint sets of realizations
+K = Fr.shape[3]
+h1, h2 = slice(0, K // 2), slice(K // 2, K)
+z1 = change(Fg[:, :, :, h1])[0] / change(Fg[:, :, :, h1])[1]
+z2 = change(Fg[:, :, :, h2])[0] / change(Fg[:, :, :, h2])[1]
+print("\nsplit-half replication of (change after GSR / noise) on a in [0.02, 0.05] and [0.01, 0.02]:")
+for i, G in enumerate(GS):
+    for j, s_ in enumerate(DISP):
+        print(f"G={G} s={s_}: halves {z1[i, j, -1]:5.1f} / {z2[i, j, -1]:5.1f}   and {z1[i, j, -2]:5.1f} / {z2[i, j, -2]:5.1f}")
+below = (s_gsr / n_gsr)[:, :, mid < 0]
+print(f"max over damped-side intervals of (change after GSR / noise): {below.max():.2f}")
+np.savez(ROOT / "results" / "regimes_summary.npz", z1=z1, z2=z2, mid=mid, s_raw=s_raw, n_raw=n_raw, s_gsr=s_gsr, n_gsr=n_gsr, SYm=SYm)
 
 # ---------------------------------------------------------------- figure
 C = ["#2a78d6", "#eb6834", "#1baf7a"]

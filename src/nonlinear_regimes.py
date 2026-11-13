@@ -8,7 +8,8 @@ Sweep a across the bifurcation for several global couplings G and frequency disp
     phase-locking value (PLV), and the PLV after removing the global phase (phases relative to the
     phase of the mean field), which isolates non-global locking;
   * mean amplitude |z|.
-Output: results/nonlinear_regimes.npz
+Usage: python nonlinear_regimes.py [seeds, e.g. 3,4,5,6]
+Output: results/nonlinear_regimes.npz (seeds 1,2) or results/nonlinear_regimes_seedsA-B.npz
 """
 import sys
 from pathlib import Path
@@ -31,7 +32,9 @@ iu = np.triu_indices(N, 1)
 L = np.diag(C.sum(1)) - C
 om_emp = 2 * np.pi * np.mean([M.peak_frequencies(ts, TR) for ts in g["ts"]], axis=0)
 om_bar = om_emp.mean()
-BETA, T, SEEDS = 0.02, 20000.0, (1, 2)
+BETA, T = 0.02, 20000.0
+SEEDS = tuple(int(x) for x in sys.argv[1].split(",")) if len(sys.argv) > 1 else (1, 2)
+OUT = "nonlinear_regimes.npz" if SEEDS == (1, 2) else f"nonlinear_regimes_seeds{SEEDS[0]}-{SEEDS[-1]}.npz"
 A = np.array([-0.05, -0.02, -0.01, -0.005, 0.0, 0.005, 0.01, 0.02, 0.05])
 GS = [0.1, 0.2, 0.4]
 DISP = [0.0, 0.5, 1.0]
@@ -83,5 +86,5 @@ for i, G in enumerate(GS):
                 SY[i, j, k, m] = sync_metrics(z)
             print(f"G={G} s={s} a={a:+.3f}  meanFC={Fr[i, j, k].mean():.3f}  R={SY[i, j, k, :, 0].mean():.3f} "
                   f"PLV={SY[i, j, k, :, 1].mean():.3f} PLVrel={SY[i, j, k, :, 2].mean():.3f}", flush=True)
-np.savez(ROOT / "results" / "nonlinear_regimes.npz", A=A, GS=GS, DISP=DISP, Fr=Fr, Fg=Fg, SY=SY)
+np.savez(ROOT / "results" / OUT, SEEDS=SEEDS, A=A, GS=GS, DISP=DISP, Fr=Fr, Fg=Fg, SY=SY)
 print("saved")
