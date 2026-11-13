@@ -20,18 +20,18 @@ $\ell=\operatorname{diag}(L^{+})$ and $h=L^{+}\ell$.
 
 \begin{proposition}[GSR near the bifurcation]\label{prop:gsr}
 Let $L$ be the Laplacian of a connected weighted graph on $N$ nodes, let $F(\theta)=\operatorname{corr}S(\theta)$
-with $S(\theta)$ as in \eqref{eq:S-theta}, and let $G(\theta)=\operatorname{GSR}(F(\theta))$. Then
-$F$ and $G$ extend to real-analytic functions of $\theta$ on a neighbourhood of $\theta=0$, and as
+with $S(\theta)$ as in \eqref{eq:S-theta}, and let $\Gamma(\theta)=\operatorname{GSR}(F(\theta))$. Then
+$F$ and $\Gamma$ extend to real-analytic functions of $\theta$ on a neighbourhood of $\theta=0$, and as
 $\theta\downarrow0$:
 \begin{enumerate}
   \item[(a)] $F(\theta)=\mathbf 1\mathbf 1^{\top}-\dfrac{N\theta}{2}\,\Omega+O(\theta^{2})$;
-  \item[(b)] $G(\theta)=\operatorname{corr}(L^{+})+\theta\,G_1+O(\theta^{2})$, where
-  $G_1=\mathrm d\operatorname{corr}_{L^{+}}\bigl[-(L^{+})^{2}+\tfrac12(\mathbf 1h^{\top}+h\mathbf 1^{\top})\bigr]$;
+  \item[(b)] $\Gamma(\theta)=\operatorname{corr}(L^{+})+\theta\,\Gamma_1+O(\theta^{2})$, where
+  $\Gamma_1=\mathrm d\operatorname{corr}_{L^{+}}\bigl[-(L^{+})^{2}+\tfrac12(\mathbf 1h^{\top}+h\mathbf 1^{\top})\bigr]$;
   \item[(c)] consequently
   \[
     \lim_{\theta\downarrow0}
-    \frac{\|\partial_{\log\theta}G\|}{\|\partial_{\log\theta}F\|}
-    =\rho_\infty(L):=\frac{2\,\|G_1\|}{N\,\|\Omega\|},
+    \frac{\|\partial_{\log\theta}\Gamma\|}{\|\partial_{\log\theta}F\|}
+    =\rho_\infty(L):=\frac{2\,\|\Gamma_1\|}{N\,\|\Omega\|},
   \]
   for any norm on the off-diagonal entries.
 \end{enumerate}
@@ -55,12 +55,12 @@ $\theta$, and the residual sensitivity is reduced by the factor $\rho_\infty(L)$
 $\theta\mapsto(\theta+\lambda_k)^{-1}$ with $k\ge2$ is analytic on $|\theta|<\lambda_2$, so $T$ is
 analytic there and $T(0)=P$ has diagonal $1/N>0$. The map $\operatorname{corr}$ is analytic on
 symmetric matrices with positive diagonal and satisfies $\operatorname{corr}(cS)=\operatorname{corr}(S)$
-for $c>0$. Hence $F=\operatorname{corr}T$ is analytic near $0$. For $G$, note that $w$ in \eqref{eq:gsr-S} may be
+for $c>0$. Hence $F=\operatorname{corr}T$ is analytic near $0$. For $\Gamma$, note that $w$ in \eqref{eq:gsr-S} may be
 replaced by $\operatorname{diag}(T)^{-1/2}\mathbf 1$, which is analytic. Then
 $\theta Q=T-Tww^{\top}T/(w^{\top}Tw)$ is analytic, since $w^{\top}Tw\to N^{2}>0$ at $\theta=0$. It
 vanishes at $\theta=0$, because $T(0)=P$ and $w(0)\propto\mathbf 1$ give $P-P=0$. Hence
 $Q=(\theta Q)/\theta$ is analytic. By the expansion below,
-$\operatorname{diag}Q(0)=\operatorname{diag}L^{+}$, which is positive because the graph is connected. So $G=\operatorname{corr}Q$ is analytic near $0$.
+$\operatorname{diag}Q(0)=\operatorname{diag}L^{+}$, which is positive because the graph is connected. So $\Gamma=\operatorname{corr}Q$ is analytic near $0$.
 
 \emph{(a).} Since $P_{ij}=1/N$,
 \begin{align*}
@@ -102,7 +102,7 @@ differentiable at $L^{+}$, gives (b).
 
 \emph{(c).} By analyticity the expansions may be differentiated term by term:
 $\partial_{\log\theta}F=\theta\,\partial_\theta F=-\tfrac{N\theta}{2}\Omega+O(\theta^{2})$ and
-$\partial_{\log\theta}G=\theta G_1+O(\theta^{2})$. The common factor $\theta$ cancels in the
+$\partial_{\log\theta}\Gamma=\theta \Gamma_1+O(\theta^{2})$. The common factor $\theta$ cancels in the
 quotient. Note that $\Omega_{ij}>0$ for $i\neq j$, so the denominator does not vanish.
 
 \emph{(d).} $S_\sigma=(\theta^{-1}+N\sigma^{2})P+R(\theta)=\theta_{\mathrm{eff}}^{-1}P+R(\theta)$. The
@@ -131,14 +131,14 @@ confound to be practically binding is an empirical question that this analysis d
 \end{remark}
 
 \begin{remark}[Band-passed signals]\label{rem:gsr-filter}
-For a band-pass filter $H$ and a common oscillation frequency $\omega$, the filtered zero-lag
+For a band-pass filter $H$ applied forward and backward and a common oscillation frequency $\omega$, the filtered zero-lag
 covariance has the same eigenvectors:
-$S(\theta)=\sum_k\varphi(\theta+\lambda_k)\,u_ku_k^{\top}$ with
+$S(\theta)=\sum_k\varphi(G(\theta+\lambda_k))\,u_ku_k^{\top}$, where the argument is the physical decay rate of mode $k$, with
 $\varphi(\mu)=\int|H(f)|^{4}\,\Phi_{\mu,\omega}(f)\,\mathrm df$, where $\Phi_{\mu,\omega}$ is the spectrum
 of a scalar complex Ornstein--Uhlenbeck process with damping $\mu$ and frequency $\omega$. If
 $\omega$ lies in the pass band, then $\varphi(\mu)\sim c/\mu$ as $\mu\downarrow0$ and the proof goes
-through with $\theta^{-1}$ replaced by $\varphi(\theta)$ and $L^{+}$ replaced by
-$R_\varphi=\sum_{k\ge2}\varphi(\lambda_k)u_ku_k^{\top}$. If instead the filter removes the critical
+through with $\theta^{-1}$ replaced by $\varphi(G\theta)$ and $L^{+}$ replaced by
+$R_\varphi=\sum_{k\ge2}\varphi(G\lambda_k)u_ku_k^{\top}$; unlike zero-lag FC of the unfiltered signal, this depends on $G$ in physical units, which is the dependence on the time scale noted after Proposition~\ref{prop:rescale}. If instead the filter removes the critical
 frequency (for example $\omega=0$ with a high-pass cut), $\varphi(0)<\infty$: the critical mode does not
 dominate the filtered covariance, and FC is insensitive to the bifurcation for a different reason.
 \end{remark}
