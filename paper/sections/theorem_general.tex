@@ -15,8 +15,8 @@ Since $\corr$ is invariant under $S\mapsto ESE$ for positive diagonal $E$, also
   \GSR(F)=\corr(Q),\qquad Q=S-\frac{Sww^\top S}{w^\top Sw},
 \end{equation}
 with $w=D_S^{-1/2}\one$. Here $Q$ is the covariance of $x$ after regression on the weighted average
-$w^\top x$. More generally, we call any $w^\top x$ with $w$ depending continuously on the distance to
-the bifurcation a \emph{global signal}; regressing out the plain mean of the raw signals corresponds
+$w^\top x$. More generally, we call any $w^\top x$ with weights $w(\varepsilon)=w(0)+O(\varepsilon)$, depending on the distance $\varepsilon$ to
+the bifurcation, a \emph{global signal}; regressing out the plain mean of the raw signals corresponds
 to $w=\one$.
 
 Near a bifurcation the covariance is dominated by one mode. We write
@@ -41,8 +41,7 @@ $\tilde R=D_v^{-1}R(0)D_v^{-1}$ and $\Omega_v(i,j)=\tilde R_{ii}+\tilde R_{jj}-2
   so that, if $\Pi R(0)\Pi^\top$ has positive diagonal, FC after regression converges to $\corr\bigl(\Pi R(0)\Pi^\top\bigr)$, which does not depend on $\varepsilon$;
   \item[(c)] adding an independent component with loading $v$, $S\mapsto S+\sigma^2vv^\top$, is the same as replacing $\varepsilon$ by $\varepsilon_{\rm eff}$ in the singular part, $\varepsilon_{\rm eff}^{-1}=\varepsilon^{-1}+\sigma^2$, and $\corr(S+\sigma^2vv^\top)=F(\varepsilon_{\rm eff})+O(\varepsilon\,\varepsilon_{\rm eff})$.
 \end{enumerate}
-The constants in (a) and (b) are controlled by $\max_i\tilde R_{ii}=\max_iR(0)_{ii}/v_i^2$, so the
-expansions hold for $\varepsilon\ll\varepsilon^*:=1/\max_i\tilde R_{ii}$.
+The expansion in (a) is a series in $\varepsilon\tilde R_{ij}$, so $\varepsilon^*:=1/\max_i\tilde R_{ii}=\min_iv_i^2/R(0)_{ii}$ gives an indicative scale below which the leading terms dominate; the constants also depend on the derivatives of $R$ and $w$ at $0$.
 \end{theorem}
 
 \begin{proof}
@@ -65,41 +64,39 @@ Let $A(\varepsilon)$ be real, Metzler and irreducible, depending smoothly on $\v
 eigenvalue $-\varepsilon$ of largest real part, right and left eigenvectors $r,l>0$ normalized by
 $l^\top r=1$, and the rest of the spectrum in $\operatorname{Re}\mu\le-\gamma$ for some $\gamma>0$
 independent of $\varepsilon$. Let $S$ solve $AS+SA^\top+B=0$ with $B\succ0$. Then \eqref{eq:S-eps} holds with
-$v=\sqrt{l^\top Bl/2}\;r$. In particular, Theorem~\ref{thm:confound} applies to directed and non-normal
+$v=\sqrt{l(0)^\top Bl(0)/2}\;r(0)$. In particular, Theorem~\ref{thm:confound} applies to directed and non-normal
 coupling. The variance diverges along the \emph{right} critical vector, and the left vector enters
 only through the prefactor.
 \end{corollary}
 
 \begin{proof}
-Let $P=rl^\top$ be the spectral projector onto the critical mode, so that $e^{At}=e^{-\varepsilon t}P+e^{At}(I-P)$ with $\|e^{At}(I-P)\|\le Ke^{-\gamma' t}$ for any $0<\gamma'<\gamma$, uniformly in small $\varepsilon$. Inserting this into $S=\int_0^\infty e^{At}Be^{A^\top t}\,\mathrm dt$, the term $PBP^\top$ contributes $\int_0^\infty e^{-2\varepsilon t}\,\mathrm dt\;(l^\top Bl)\,rr^\top=(l^\top Bl/2\varepsilon)\,rr^\top$. The cross terms and the term in $(I-P)$ alone are integrals of functions bounded by $Ke^{-\gamma' t}$; they define a matrix $R(\varepsilon)$ that is bounded and depends smoothly on $\varepsilon$, since $P$ and the restriction of $A$ to the complementary invariant subspace do. Positivity of $r$ and $l$ is the Perron--Frobenius theorem for irreducible Metzler matrices~\cite{Berman1994}.
+Let $P=rl^\top$ be the spectral projector onto the critical mode, so that $e^{At}=e^{-\varepsilon t}P+e^{At}(I-P)$ with $\|e^{At}(I-P)\|\le Ke^{-\gamma' t}$ for any $0<\gamma'<\gamma$, uniformly in small $\varepsilon$. Inserting this into $S=\int_0^\infty e^{At}Be^{A^\top t}\,\mathrm dt$, the term $PBP^\top$ contributes $\int_0^\infty e^{-2\varepsilon t}\,\mathrm dt\;(l^\top Bl)\,rr^\top=(l^\top Bl/2\varepsilon)\,rr^\top$. The cross terms and the term in $(I-P)$ alone are integrals of functions bounded by $Ke^{-\gamma' t}$, and their $\varepsilon$-derivatives by $K't\,e^{-\gamma' t}$; they define a bounded matrix that depends smoothly on $\varepsilon$, since $P$ and the restriction of $A$ to the complementary invariant subspace do. Finally, $r$, $l$ and hence $(l^\top Bl)\,rr^\top$ depend smoothly on $\varepsilon$, so $(l^\top Bl/2\varepsilon)\,rr^\top=\varepsilon^{-1}vv^\top+O(1)$ with $v$ as stated; the $O(1)$ remainder joins the bounded terms in $R(\varepsilon)$. Positivity of $r$ and $l$ is the Perron--Frobenius theorem for irreducible Metzler matrices~\cite{Berman1994}.
 \end{proof}
 
 For directed \emph{diffusive} coupling, $A=-G(\diag\theta+L_{\rm out})$ with
 $L_{\rm out}=\diag(C\one)-C$, the right critical vector is exactly $\one$ when $\theta$ is homogeneous,
-because $L_{\rm out}\one=0$. The left vector is the stationary distribution of the random walk on the
-reversed graph, which is not uniform. The divergent variance is therefore still exactly the global
+because $L_{\rm out}\one=0$. The left vector satisfies $l_j\propto\pi_j/d_j$, where $d_j=\sum_kC_{jk}$ and $\pi$ is the stationary distribution of the random walk with transition probabilities $C_{jk}/d_j$; it is not uniform unless $\pi\propto d$. The divergent variance is therefore still exactly the global
 signal, and GSR still removes it. What changes under non-normality is which projection carries the
 critical \emph{dynamics}:
 
 \begin{proposition}[The left critical mode is a clock]\label{prop:left}
-For the linearized dynamics $\mathrm dx=Ax\,\mathrm dt+\mathrm d\eta$, with $A$ as in Corollary~\ref{cor:nonnormal} and $\eta$ a Wiener process with covariance $B$, the projection $y=l^\top x$ is an exact scalar Ornstein--Uhlenbeck process, $\mathrm dy=-\varepsilon y\,\mathrm dt+l^\top\mathrm d\eta$, with autocorrelation $e^{-\varepsilon|\tau|}$. Any other projection $u^\top x$ with $u\not\propto l$ mixes the critical rate with the faster rates of the remaining modes. With a common frequency $\omega$, $l^\top x$ has autocorrelation $e^{-\varepsilon|\tau|}\cos\omega\tau$.
+For the linearized dynamics $\mathrm dx=Ax\,\mathrm dt+\mathrm d\eta$, with $A$ as in Corollary~\ref{cor:nonnormal} and $\eta$ a Wiener process with covariance $B$, the projection $y=l^\top x$ is an exact scalar Ornstein--Uhlenbeck process, $\mathrm dy=-\varepsilon y\,\mathrm dt+l^\top\mathrm d\eta$, with autocorrelation $e^{-\varepsilon|\tau|}$. The stationary projection $u^\top x$ with $u=S^{-1}r$ has the same autocorrelation, although it is not Markov. For generic $u$, the autocorrelation of $u^\top x$ mixes the critical rate with the faster rates of the remaining modes. With a common frequency $\omega$, both $l^\top x$ and $(S^{-1}r)^\top x$ have autocorrelation $e^{-\varepsilon|\tau|}\cos\omega\tau$.
 \end{proposition}
 
 \begin{proof}
-$l^\top A=-\varepsilon l^\top$ gives the stochastic differential equation for $y$. For $u^\top x$, the autocovariance $u^\top e^{A\tau}S u$ contains the terms $e^{\mu_k\tau}$ of every mode with nonzero weight. With a common frequency, apply the argument to the complex process $l^\top z$ in the rotating frame of Proposition~\ref{prop:omega}.
+$l^\top A=-\varepsilon l^\top$ gives the stochastic differential equation for $y$. For $\tau\ge0$ the stationary autocovariance of $u^\top x$ is $u^\top e^{A\tau}Su$. If $Su=r$, it equals $u^\top e^{A\tau}r=e^{-\varepsilon\tau}\,u^\top r$. If $A$ is diagonalizable with eigenpairs $(\mu_k,r_k,l_k)$, the autocovariance is $\sum_ke^{\mu_k\tau}(u^\top r_k)(l_k^\top Su)$, and a single exponential at rate $\varepsilon$ requires $(u^\top r_k)(l_k^\top Su)=0$ for every $k\ge2$; the two cases above satisfy this, and generic $u$ do not. With a common frequency, apply the argument to the complex process in the rotating frame of Proposition~\ref{prop:omega}.
 \end{proof}
 
-For symmetric coupling $l\propto r$, and for symmetric diffusive coupling both are $\one$, so the global
-signal is at once the variance direction and the clock. For directed or additive coupling the two
-roles separate: the global signal, or the projection on $r$, carries the divergent variance; the
-projection on $l$ carries the rate $\delta$. Section~\ref{sec:temporal} uses this distinction.
+For symmetric coupling $l\propto r$ and $S^{-1}r\propto r$, and for symmetric diffusive coupling all three are $\one$, so the global
+signal is at once the variance direction and the clock. For directed coupling the roles separate: the global signal, or the projection on $r$, carries the divergent variance, while the
+projections on $l$, which needs only the model, and on $S^{-1}r$, which uses the measured covariance, carry the rate $\delta$. Section~\ref{sec:temporal} uses this distinction.
 
 Three further consequences deserve emphasis. First, part (b) of Theorem~\ref{thm:confound} does not
 require the critical mode to be close to uniform. Any regression on a global signal with positive
 weights removes the divergent part of the critical mode exactly, and after it FC no longer depends on
 the distance to the bifurcation at leading order. Second, for standardized signals the critical mode
 \emph{is} uniform at leading order, $D_S^{-1/2}v\propto\one+O(\varepsilon)$. This is why mean FC tracks
-the distance to the bifurcation in every model we fitted (Sec.~\ref{sec:kappa}). Third,
+the distance to the bifurcation in the one-parameter models of Sec.~\ref{sec:kappa}. Third,
 Proposition~\ref{prop:perron} matters for (c). Physiological global components, whose loading is
 roughly uniform, mimic a change of $\varepsilon$ to the extent that their loading overlaps with $v$.
 
