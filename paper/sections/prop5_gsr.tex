@@ -4,24 +4,10 @@
 % 0 = lambda_1 < lambda_2 <= ... <= lambda_N, u_1 = N^{-1/2} 1; P = N^{-1} 1 1^T;
 % L^+ Moore--Penrose pseudoinverse; corr(S) = D_S^{-1/2} S D_S^{-1/2}.
 
-\subsection{Global signal regression}\label{sec:gsr}
+\subsection{The diffusive case quantified}\label{sec:diffusive-q}
 
-Let $x$ be a centred Gaussian vector with covariance $S$ and let $F=\operatorname{corr}(S)$ be its
-correlation matrix, the functional connectivity. Global signal regression (GSR) standardises each
-coordinate, $z=D_S^{-1/2}x$, regresses $z$ on the global signal $g=N^{-1}\mathbf 1^{\top}z$, and
-returns the correlation matrix of the residuals. In terms of $F$,
-\begin{equation}\label{eq:gsr}
-  \operatorname{GSR}(F)=\operatorname{corr}\Bigl(F-\frac{F\mathbf 1\mathbf 1^{\top}F}{\mathbf 1^{\top}F\mathbf 1}\Bigr).
-\end{equation}
-Since $\operatorname{corr}$ is invariant under $S\mapsto ESE$ for positive diagonal $E$, we also have
-\begin{equation}\label{eq:gsr-S}
-  \operatorname{GSR}(F)=\operatorname{corr}(Q),\qquad
-  Q=S-\frac{Sww^{\top}S}{w^{\top}Sw},
-\end{equation}
-with $w=D_S^{-1/2}\mathbf 1$.
-Here $Q$ is the covariance of $x$ after regression on the weighted average $w^{\top}x$.
-
-For the diffusive model with homogeneous ratio $\theta=|a|/G$ and symmetric coupling, the
+For diffusive coupling the objects of Theorem~\ref{thm:confound} are explicit, and the first-order
+correction after GSR can be computed. For homogeneous ratio $\theta=|a|/G$ and symmetric coupling, the
 zero-lag covariance of the real parts is, up to a positive factor,
 \begin{equation}\label{eq:S-theta}
   S(\theta)=(\theta I+L)^{-1}=\frac1\theta\,P+R(\theta),\qquad

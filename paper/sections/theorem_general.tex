@@ -1,35 +1,45 @@
-% General global-mode theorem (any symmetric excitatory coupling, homogeneous damping).
-% Numerical check: src/theorem_general_check.py
+% Central result: regression on a global signal removes the critical mode.
+% Numerical checks: src/theorem_general_check.py (additive), src/nonnormal_check.py (directed).
 
-\subsection{The confound for general excitatory coupling}\label{sec:general}
+\subsection{Global signal regression removes the critical mode}\label{sec:gsr}
 
-The next result states the confound without assuming that the critical mode is uniform. Its
-hypothesis covers both couplings of Corollary~\ref{cor:closed} with homogeneous damping. For
-diffusive coupling, $S\propto(\theta I+L)^{-1}$ has critical rate $\varepsilon=\theta$ and
-$v=\one/\sqrt N$. For additive coupling, $S\propto(I-\rho\hat C)^{-1}$ has critical rate
-$\varepsilon=1-\rho=\kappa$ and $v$ is the Perron vector of $C$. In both cases the eigenvectors do not
-depend on the distance to the bifurcation, and
-\begin{equation}\label{eq:S-eps}
-  S(\varepsilon)=\varepsilon^{-1}vv^\top+R(\varepsilon),\qquad R(\varepsilon)v=0,
+Let $x$ be a centred Gaussian vector with covariance $S$ and let $F=\corr(S)$ be its correlation
+matrix, the functional connectivity. Global signal regression (GSR) standardizes each coordinate,
+$z=D_S^{-1/2}x$, regresses $z$ on the global signal $g=N^{-1}\one^\top z$, and returns the correlation
+matrix of the residuals. In terms of $F$,
+\begin{equation}\label{eq:gsr}
+  \GSR(F)=\corr\Bigl(F-\frac{F\one\one^\top F}{\one^\top F\one}\Bigr).
 \end{equation}
-with $v>0$, $\|v\|=1$, and $R$ real-analytic at $\varepsilon=0$ with $R(0)\succeq0$ and $\ker R(0)=\operatorname{span}\{v\}$.
-A \emph{global signal} is any weighted average $g=w^\top x$ with $w$ depending analytically on
-$\varepsilon$ and $w(0)^\top v\ne0$; positive weights always qualify, because $v>0$. Regressing $g$
-out of the standardized signals is the GSR of Eq.~\eqref{eq:gsr}. It corresponds to
-$w=D_S^{-1/2}\one\propto D_v^{-1}\one+O(\varepsilon)$, while regressing out the mean of the raw
-signals corresponds to $w=\one$.
+Since $\corr$ is invariant under $S\mapsto ESE$ for positive diagonal $E$, also
+\begin{equation}\label{eq:gsr-S}
+  \GSR(F)=\corr(Q),\qquad Q=S-\frac{Sww^\top S}{w^\top Sw},
+\end{equation}
+with $w=D_S^{-1/2}\one$. Here $Q$ is the covariance of $x$ after regression on the weighted average
+$w^\top x$. More generally, we call any $w^\top x$ with $w$ depending continuously on the distance to
+the bifurcation a \emph{global signal}; regressing out the plain mean of the raw signals corresponds
+to $w=\one$.
+
+Near a bifurcation the covariance is dominated by one mode. We write
+\begin{equation}\label{eq:S-eps}
+  S(\varepsilon)=\varepsilon^{-1}vv^\top+R(\varepsilon),\qquad R(\varepsilon)=R(0)+O(\varepsilon),
+\end{equation}
+where $\varepsilon\downarrow0$ is the dimensionless distance to the bifurcation and $v>0$ is entrywise
+positive. For diffusive coupling with homogeneous damping, \eqref{eq:S-eps} holds with $\varepsilon=\theta$,
+$v=\one/\sqrt N$ and $R(0)=L^+$ (Sec.~\ref{sec:diffusive-q}). For additive coupling with homogeneous
+damping, it holds with $\varepsilon=1-\rho=\kappa$ and $v$ the Perron vector of $C$. Corollary~\ref{cor:nonnormal}
+shows that it also holds for directed, non-normal coupling.
 
 \begin{theorem}[Global-mode confound]\label{thm:confound}
 Assume \eqref{eq:S-eps} and let $F(\varepsilon)=\corr S(\varepsilon)$. Write
 $\tilde R=D_v^{-1}R(0)D_v^{-1}$ and $\Omega_v(i,j)=\tilde R_{ii}+\tilde R_{jj}-2\tilde R_{ij}$. As $\varepsilon\downarrow0$:
 \begin{enumerate}
   \item[(a)] $F(\varepsilon)=\one\one^\top-\tfrac{\varepsilon}{2}\,\Omega_v+O(\varepsilon^2)$;
-  \item[(b)] for every global signal $w$, the covariance of the residuals of $x$ after regression on $w^\top x$ satisfies
+  \item[(b)] for every global signal with $w(0)^\top v\ne0$, which includes all positive weights, the covariance of the residuals after regression on $w^\top x$ satisfies
   \[
     Q(\varepsilon)=\Pi R(0)\Pi^\top+O(\varepsilon),\qquad \Pi=I-\frac{v\,w(0)^\top}{w(0)^\top v},
   \]
-  so the FC after regression converges to $\corr\bigl(\Pi R(0)\Pi^\top\bigr)$, which does not depend on $\varepsilon$;
-  \item[(c)] adding an independent component with loading $v$, $S\mapsto S+\sigma^2vv^\top$, is the same as replacing $\varepsilon$ by $\varepsilon_{\rm eff}$ in the singular part, $\varepsilon_{\rm eff}^{-1}=\varepsilon^{-1}+\sigma^2$, and changes $F$ by $O(\varepsilon\,\varepsilon_{\rm eff})$ relative to $F(\varepsilon_{\rm eff})$.
+  so that, if $\Pi R(0)\Pi^\top$ has positive diagonal, FC after regression converges to $\corr\bigl(\Pi R(0)\Pi^\top\bigr)$, which does not depend on $\varepsilon$;
+  \item[(c)] adding an independent component with loading $v$, $S\mapsto S+\sigma^2vv^\top$, is the same as replacing $\varepsilon$ by $\varepsilon_{\rm eff}$ in the singular part, $\varepsilon_{\rm eff}^{-1}=\varepsilon^{-1}+\sigma^2$, and $\corr(S+\sigma^2vv^\top)=F(\varepsilon_{\rm eff})+O(\varepsilon\,\varepsilon_{\rm eff})$.
 \end{enumerate}
 The constants in (a) and (b) are controlled by $\max_i\tilde R_{ii}=\max_iR(0)_{ii}/v_i^2$, so the
 expansions hold for $\varepsilon\ll\varepsilon^*:=1/\max_i\tilde R_{ii}$.
@@ -41,29 +51,62 @@ expansions hold for $\varepsilon\ll\varepsilon^*:=1/\max_i\tilde R_{ii}$.
   F_{ij}&=\frac{1+\varepsilon\tilde R_{ij}}{\sqrt{(1+\varepsilon\tilde R_{ii})(1+\varepsilon\tilde R_{jj})}}+O(\varepsilon^2)\\
   &=1-\tfrac{\varepsilon}{2}\Omega_v(i,j)+O(\varepsilon^2).
 \end{align*}
-(b) Write $c=v^\top w$, $r=R w$ and $\eta=\varepsilon\,w^\top r/c^2$. Then $Sw=\varepsilon^{-1}c\,v+r$ and $w^\top Sw=\varepsilon^{-1}c^2(1+\eta)$, because $v^\top r=0$. Expanding $Q=S-Sww^\top S/(w^\top Sw)$ gives the exact identity
+(b) Write $c=v^\top w$, $r=R w$ and $\eta=\varepsilon\,w^\top r/c^2$. Then $Sw=\varepsilon^{-1}c\,v+r$ and $w^\top Sw=\varepsilon^{-1}c^2+w^\top r=\varepsilon^{-1}c^2(1+\eta)$. Expanding $Q=S-Sww^\top S/(w^\top Sw)$ gives the exact identity
 \begin{multline*}
   Q=R-\frac{v r^\top+r v^\top}{c\,(1+\eta)}\\
   +\frac{w^\top r}{c^2(1+\eta)}\,vv^\top-\frac{\varepsilon\,rr^\top}{c^2(1+\eta)}.
 \end{multline*}
-The singular terms $\varepsilon^{-1}vv^\top$ cancel exactly. Letting $\varepsilon\to0$, so that $\eta\to0$, $w\to w(0)$ and $R\to R(0)$, yields $R(0)-\bigl(vr^\top+rv^\top\bigr)/c+(w^\top r/c^2)vv^\top=\Pi R(0)\Pi^\top$. The limit has positive diagonal unless some $\Pi^\top e_i$ lies in $\ker R(0)=\operatorname{span}\{v\}$, which fails for generic $w$, and $\corr$ is continuous there.
+The singular terms $\varepsilon^{-1}vv^\top$ cancel exactly, without any assumption on $R$. Letting $\varepsilon\to0$, so that $\eta\to0$, $w\to w(0)$ and $R\to R(0)$, yields $R(0)-\bigl(vr^\top+rv^\top\bigr)/c+(w^\top r/c^2)vv^\top=\Pi R(0)\Pi^\top$, and $\corr$ is continuous at matrices with positive diagonal.
 (c) $S+\sigma^2vv^\top=\varepsilon_{\rm eff}^{-1}vv^\top+R(\varepsilon)$, and $R(\varepsilon)-R(\varepsilon_{\rm eff})=O(\varepsilon)$ enters $F$ multiplied by $\varepsilon_{\rm eff}$, by (a).
 \end{proof}
 
-Three consequences deserve emphasis. First, part (b) does not require the critical mode to be close
-to uniform. Any regression on a global signal with positive weights removes the divergent part of
-the critical mode exactly, and after it FC no longer depends on the distance to the bifurcation at
-leading order. The bound of Proposition~\ref{prop:perron} is not needed for this. Second, for
-standardized signals the critical mode \emph{is} uniform at leading order: $D_S^{-1/2}v\propto\one+O(\varepsilon)$.
-This is why mean FC tracks the distance to the bifurcation in both models (Sec.~\ref{sec:kappa}).
-Third, Proposition~\ref{prop:perron} matters for (c). Physiological global components, whose
-loading is roughly uniform, mimic a change of $\varepsilon$ to the extent that their loading overlaps
-with $v$.
+\begin{corollary}[Directed coupling]\label{cor:nonnormal}
+Let $A(\varepsilon)$ be real, Metzler and irreducible, depending smoothly on $\varepsilon$, with a simple
+eigenvalue $-\varepsilon$ of largest real part, right and left eigenvectors $r,l>0$ normalized by
+$l^\top r=1$, and the rest of the spectrum in $\operatorname{Re}\mu\le-\gamma$ for some $\gamma>0$
+independent of $\varepsilon$. Let $S$ solve $AS+SA^\top+B=0$ with $B\succ0$. Then \eqref{eq:S-eps} holds with
+$v=\sqrt{l^\top Bl/2}\;r$. In particular, Theorem~\ref{thm:confound} applies to directed and non-normal
+coupling. The variance diverges along the \emph{right} critical vector, and the left vector enters
+only through the prefactor.
+\end{corollary}
+
+\begin{proof}
+Let $P=rl^\top$ be the spectral projector onto the critical mode, so that $e^{At}=e^{-\varepsilon t}P+e^{At}(I-P)$ with $\|e^{At}(I-P)\|\le Ke^{-\gamma' t}$ for any $0<\gamma'<\gamma$, uniformly in small $\varepsilon$. Inserting this into $S=\int_0^\infty e^{At}Be^{A^\top t}\,\mathrm dt$, the term $PBP^\top$ contributes $\int_0^\infty e^{-2\varepsilon t}\,\mathrm dt\;(l^\top Bl)\,rr^\top=(l^\top Bl/2\varepsilon)\,rr^\top$. The cross terms and the term in $(I-P)$ alone are integrals of functions bounded by $Ke^{-\gamma' t}$; they define a matrix $R(\varepsilon)$ that is bounded and depends smoothly on $\varepsilon$, since $P$ and the restriction of $A$ to the complementary invariant subspace do. Positivity of $r$ and $l$ is the Perron--Frobenius theorem for irreducible Metzler matrices~\cite{Berman1994}.
+\end{proof}
+
+For directed \emph{diffusive} coupling, $A=-G(\diag\theta+L_{\rm out})$ with
+$L_{\rm out}=\diag(C\one)-C$, the right critical vector is exactly $\one$ when $\theta$ is homogeneous,
+because $L_{\rm out}\one=0$. The left vector is the stationary distribution of the random walk on the
+reversed graph, which is not uniform. The divergent variance is therefore still exactly the global
+signal, and GSR still removes it. What changes under non-normality is which projection carries the
+critical \emph{dynamics}:
+
+\begin{proposition}[The left critical mode is a clock]\label{prop:left}
+For the linearized dynamics $\mathrm dx=Ax\,\mathrm dt+\mathrm d\eta$, with $A$ as in Corollary~\ref{cor:nonnormal} and $\eta$ a Wiener process with covariance $B$, the projection $y=l^\top x$ is an exact scalar Ornstein--Uhlenbeck process, $\mathrm dy=-\varepsilon y\,\mathrm dt+l^\top\mathrm d\eta$, with autocorrelation $e^{-\varepsilon|\tau|}$. Any other projection $u^\top x$ with $u\not\propto l$ mixes the critical rate with the faster rates of the remaining modes. With a common frequency $\omega$, $l^\top x$ has autocorrelation $e^{-\varepsilon|\tau|}\cos\omega\tau$.
+\end{proposition}
+
+\begin{proof}
+$l^\top A=-\varepsilon l^\top$ gives the stochastic differential equation for $y$. For $u^\top x$, the autocovariance $u^\top e^{A\tau}S u$ contains the terms $e^{\mu_k\tau}$ of every mode with nonzero weight. With a common frequency, apply the argument to the complex process $l^\top z$ in the rotating frame of Proposition~\ref{prop:omega}.
+\end{proof}
+
+For symmetric coupling $l\propto r$, and for symmetric diffusive coupling both are $\one$, so the global
+signal is at once the variance direction and the clock. For directed or additive coupling the two
+roles separate: the global signal, or the projection on $r$, carries the divergent variance; the
+projection on $l$ carries the rate $\delta$. Section~\ref{sec:temporal} uses this distinction.
+
+Three further consequences deserve emphasis. First, part (b) of Theorem~\ref{thm:confound} does not
+require the critical mode to be close to uniform. Any regression on a global signal with positive
+weights removes the divergent part of the critical mode exactly, and after it FC no longer depends on
+the distance to the bifurcation at leading order. Second, for standardized signals the critical mode
+\emph{is} uniform at leading order, $D_S^{-1/2}v\propto\one+O(\varepsilon)$. This is why mean FC tracks
+the distance to the bifurcation in every model we fitted (Sec.~\ref{sec:kappa}). Third,
+Proposition~\ref{prop:perron} matters for (c). Physiological global components, whose loading is
+roughly uniform, mimic a change of $\varepsilon$ to the extent that their loading overlaps with $v$.
 
 The window $\varepsilon^*$ can be narrow. For the Schaefer-100 group connectome,
 $\varepsilon^*=2.9\times10^{-3}$ in units of $\theta$ for diffusive coupling. For additive coupling it
 is $2.0\times10^{-4}$ in units of $\kappa$ for untransformed weights, whose Perron vector has
 $v_{\min}/v_{\max}=0.05$, and $3.5\times10^{-3}$ after the compressive transformation
-$\mathrm{SC}^{0.25}$. Outside the window the suppression by GSR is partial but already substantial.
+$\mathrm{SC}^{0.25}$. For the directed effective connectivity of Sec.~\ref{sec:fit} it is $5.9\times10^{-4}$ with diffusive coupling, where $r=\one$, but only $2\times10^{-11}$ with additive coupling, whose right Perron vector has entries close to zero; in that case the asymptotic regime is practically unreachable, and the statement of the theorem, although true, has no practical force. Outside the window the suppression by GSR is partial, and for diffusive coupling it is already substantial.
 For example, the sensitivity ratio of Proposition~\ref{prop:gsr} is 0.11 at $\theta=0.06$
 (Fig.~\ref{fig:gsr}b).
