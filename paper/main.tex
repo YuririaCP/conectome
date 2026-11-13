@@ -94,7 +94,7 @@ Let $z(t)$ be a stationary solution of Eq.~\eqref{eq:sl} with parameters $(a,\om
 Set $u(t)=\sqrt c\,z(ct)$. Then $\mathrm du=\sqrt c\,c\bigl[(a+i\omega)z-|z|^2z+GMz\bigr](ct)\,\mathrm dt+\sqrt c\,\beta\,\mathrm d\mathbf W(ct)$. Since $\sqrt c\,z=u$ and $c|z|^2=|u|^2$, the drift equals $\bigl[(ca+ic\omega)u-|u|^2u+cGMu\bigr]\mathrm dt$. The process $\mathbf W(ct)$ has the law of $\sqrt c\,\widetilde{\mathbf W}(t)$ for a standard Wiener process $\widetilde{\mathbf W}$, so the noise term is $c\beta\,\mathrm d\widetilde{\mathbf W}$. The marginal law of $u(t)$ is that of $\sqrt c\,z(0)$, and correlations are invariant under the factor $\sqrt c$. Finally $\operatorname{spec}J$ scales by $c$ because $J$ is linear in $(a,\omega,G)$.
 \end{proof}
 
-The proposition does not concern the noise: $\beta$ only fixes the overall amplitude, which FC discards. Thus an FC-based fit can at best determine $(a,\omega,G)$ up to a common factor, and $\delta$ up to the same factor. The statement is exact for the unfiltered signal. A band-pass filter with fixed cut-offs in hertz breaks the invariance, so filtered FC does carry information about the time scale, but only through the shape of the filter. In Sec.~\ref{sec:fit} we show that in practice this information is too weak to pin down $\delta$.
+In the linearization $\beta$ only fixes the overall amplitude, which FC discards. In the full model it does not: $\beta$ sets the noise level relative to the amplitude at which the cubic term saturates, and with $\beta$ held fixed FC does change along $(ca,c\omega,cG)$. In a check on the AAL2 group connectome ($G=0.2$, empirical frequencies, $c=4$), the change was 2.3 times the sampling noise at $a=-0.01$ and 32 times at $a=0.005$ (\texttt{src/beta\_check.py}), whereas with $\beta$ rescaled as in the proposition it was within the noise. Since BOLD signals carry no absolute amplitude scale, $\beta$ is itself a free parameter. An FC-based fit can therefore at best determine $(a,\omega,G,\beta)$ up to the common factor of Proposition~\ref{prop:rescale}; fixing $\beta$ by convention, as is usual, fixes the scale of the fitted $\delta$ by the same convention rather than by the data. The statement is exact for the unfiltered signal. A band-pass filter with fixed cut-offs in hertz breaks the invariance, so filtered FC does carry information about the time scale, but only through the shape of the filter. In Sec.~\ref{sec:fit} we show that in practice this information is too weak to pin down $\delta$.
 
 \subsection{A common frequency drops out}
 
@@ -104,7 +104,7 @@ If $\omega_j=\omega$ for all $j$, the stationary law of $z(t)$ at a fixed time, 
 
 \begin{proof}
 Let $u(t)=e^{-i\omega t}z(t)$. Because the cubic term and the coupling commute with a global phase rotation,
-$\mathrm du=\bigl[a\odot u-|u|^2\odot u+GMu\bigr]\mathrm dt+\beta e^{-i\omega t}\mathrm d\mathbf W$, where $\odot$ is the entrywise product. Circular complex white noise is invariant in law under a deterministic rotation, so $u$ is a solution of Eq.~\eqref{eq:sl} with $\omega=0$. That system is equivariant under $u\mapsto e^{i\phi}u$, and so is its noise, so its stationary law is rotation invariant. Hence $z(t)=e^{i\omega t}u(t)$ has the same marginal law as $u(t)$.
+$\mathrm du=\bigl[a\odot u-|u|^2\odot u+GMu\bigr]\mathrm dt+\beta e^{-i\omega t}\mathrm d\mathbf W$, where $\odot$ is the entrywise product. Circular complex white noise is invariant in law under a deterministic rotation, so $u$ is a solution of Eq.~\eqref{eq:sl} with $\omega=0$. That system is equivariant under $u\mapsto e^{i\phi}u$, and so is its noise, so its stationary law is rotation invariant; the stationary law is unique because the noise acts on every coordinate and the cubic term confines the dynamics (for the linearization, because $A$ is Hurwitz). Hence $z(t)=e^{i\omega t}u(t)$ has the same marginal law as $u(t)$.
 \end{proof}
 
 Heterogeneous frequencies do enter FC, but weakly in the diffusive model: in our fits, setting $\omega_j=0$ (a multivariate Ornstein--Uhlenbeck model without oscillation) reproduced FC as well as the Hopf model did (Sec.~\ref{sec:fit}).
@@ -118,14 +118,14 @@ Let $C$ be symmetric, non-negative and irreducible, and let the frequency be com
 \begin{enumerate}
   \item[(i)] Diffusive coupling: $\FC=\corr\bigl[(\diag\theta+L)^{-1}\bigr]$ with $\theta_j=|a_j|/G$. Additive coupling with homogeneous $a$: $\FC=\corr\bigl[(I-\rho\hat C)^{-1}\bigr]$ with $\hat C=C/\lambda_{\max}(C)$ and $\rho=G\lambda_{\max}(C)/|a|<1$; the bifurcation is at $\rho=1$.
   \item[(ii)] In both cases $x$ is a Gaussian vector with precision matrix proportional to $K=\diag(q)-C$, with $q_j=\theta_j+\sum_kC_{jk}$ (diffusive) or $q_j=|a_j|/G$ (additive). For any precision $K$ and any positive diagonal $D$, $\corr(K^{-1})=\corr\bigl((DKD)^{-1}\bigr)$, and FC determines $K$ exactly up to $K\mapsto DKD$. Hence FC identifies precisely the partial correlations $\pi_{ij}=-K_{ij}/\sqrt{K_{ii}K_{jj}}$.
-  \item[(iii)] If $C$ is known and its graph is connected and not bipartite, then $q$, and hence every $\theta_j$, is identifiable from FC. If $C$ is a free parameter, no function of $q$ that is not invariant under $q\mapsto D^2q$ is identifiable. In neither case is $\delta$ in $\mathrm{s}^{-1}$ identifiable.
+  \item[(iii)] If $C$ is known and its graph is connected and not bipartite, then $q$, and hence every $\theta_j$, is identifiable from FC. If $C$ is a free parameter, no function of $q$ that is not invariant under $q\mapsto D^2q$ is identifiable; for additive coupling this holds for every positive diagonal $D$, and for diffusive coupling, where the transformed model must keep $\theta\ge0$, for $D$ close to the identity when $\theta>0$. In neither case is $\delta$ in $\mathrm{s}^{-1}$ identifiable.
 \end{enumerate}
 \end{corollary}
 
 \begin{proof}
 (i) For diffusive coupling, $A=-\diag|a|-GL=-G(\diag\theta+L)$; for additive coupling, $A=-|a|(I-\rho\hat C)$. Positive factors disappear in $\corr$.
 (ii) $\Sigma_{xx}\propto K^{-1}$ with $K$ as stated, because $L=\diag(C\one)-C$. The identity $(DKD)^{-1}=D^{-1}K^{-1}D^{-1}$ gives the invariance. Conversely, if $\corr(K^{-1})=\corr(K'^{-1})=F$, then $K^{-1}=E F E$ and $K'^{-1}=E'FE'$ for positive diagonal $E,E'$, so $K'=(E^{-1}E')^{-1}K(E^{-1}E')^{-1}$. Partial correlations are invariant under $K\mapsto DKD$, and they determine $K$ up to that transformation.
-(iii) For an edge $(i,j)$, $\pi_{ij}^2=C_{ij}^2/(q_iq_j)$, so the products $q_iq_j$ are known on every edge. On a connected graph these products fix $q$ up to $q_i\mapsto tq_i$ on one class of a bipartition and $q_i\mapsto q_i/t$ on the other; an odd cycle forces $t=1$. The last claim is Proposition~\ref{prop:rescale}.
+(iii) For an edge $(i,j)$, $\pi_{ij}^2=C_{ij}^2/(q_iq_j)$, so the products $q_iq_j$ are known on every edge. On a connected graph these products fix $q$ up to $q_i\mapsto tq_i$ on one class of a bipartition and $q_i\mapsto q_i/t$ on the other; an odd cycle forces $t=1$. If $C$ is free, $DKD=\diag(D^2q)-DCD$ with $DCD$ again symmetric and non-negative, so $(q,C)$ and $(D^2q,DCD)$ give the same FC; for diffusive coupling the implied $\theta'=D^2q-DCD\one$ is non-negative for $D$ near $I$ when $\theta>0$. The last claim is Proposition~\ref{prop:rescale}.
 \end{proof}
 
 Part (iii) separates two regimes that are often conflated. With a fixed structural connectome, the dimensionless ratios $\theta_j$ are identifiable in principle; with a fitted effective connectivity they are not, because the fit can absorb any diagonal rescaling. Even in the first regime, only the ratio of damping to coupling is fixed. An analogous degeneracy above the bifurcation, where the fit to phase-lag connectivity depends only on the ratio $K/\sqrt\lambda$ of coupling to excitability, was found empirically in Ref.~\onlinecite{Alexandersen2025}; that regime lies outside our linear analysis. In neither regime can a fitted distance from $a=0$ be read as a rate.
@@ -138,11 +138,11 @@ For homogeneous diffusive damping, $\delta=G\theta$, and the scale-free version 
 \subsection{The critical mode is positive}
 
 \begin{proposition}[Critical mode under excitatory coupling]\label{prop:perron}
-Let $A=\diag(a)+GM$ with $M$ Metzler and irreducible. Then the eigenvalue of $A$ with largest real part, $-\delta$, is real and simple, and its eigenvector $v$ can be chosen with all entries positive. With $v_{\min}=\min_jv_j$ and $v_{\max}=\max_jv_j$,
+Let $A=\diag(a)+GM$ with $M$ Metzler and irreducible, and let the frequency be common, so that the real parts of the eigenvalues of $J$ are those of $A$. Then the eigenvalue of $A$ with largest real part, $-\delta$, is real and simple, and its eigenvector $v$ can be chosen with all entries positive. With $v_{\min}=\min_jv_j$ and $v_{\max}=\max_jv_j$,
 \begin{equation}\label{eq:polya}
   \cos\angle(v,\one)=\frac{\one^\top v}{\sqrt N\,\|v\|}\ \ge\ \frac{2\sqrt{v_{\min}v_{\max}}}{v_{\min}+v_{\max}}.
 \end{equation}
-If moreover $A$ is symmetric, $\Sigma_{xx}=\tfrac{\beta^2}{2}\sum_k\mu_k^{-1}u_ku_k^\top$ in the orthonormal eigenbasis $\{u_k\}$ of $-A$, with $u_1=v/\|v\|$ and $\mu_1=\delta$, so the fraction of the total variance carried by $v$ tends to one as $\delta\to0$.
+If moreover $A$ is symmetric, $\Sigma_{xx}=\tfrac{\beta^2}{2}\sum_k\mu_k^{-1}u_ku_k^\top$ in the orthonormal eigenbasis $\{u_k\}$ of $-A$, with $u_1=v/\|v\|$ and $\mu_1=\delta$, so the fraction of the total variance carried by $v$ tends to one as $\delta\to0$ with the remaining rates bounded away from zero.
 \end{proposition}
 
 \begin{proof}
@@ -154,7 +154,7 @@ The bound \eqref{eq:polya} depends only on the spread of the Perron vector. For 
 \subsection{Diffusive coupling: the critical mode is the global signal}
 
 \begin{proposition}[Diffusive coupling]\label{prop:diffusive}
-Let $M=-L$ with $C$ symmetric and the graph connected, and let $0=\lambda_1<\lambda_2\le\dots\le\lambda_N$ be the eigenvalues of $L$. Then $\delta/G$ is the smallest eigenvalue of $\diag\theta+L$, and $\theta_{\min}\le\delta/G\le\bar\theta$, where $\bar\theta$ is the mean of $\theta$. If $\theta$ is homogeneous, the critical mode is exactly $\one/\sqrt N$ and $\delta=G\theta$. In general, its angle $\phi$ to $\one$ satisfies
+Let $M=-L$ with $C$ symmetric, the graph connected and the frequency common, and let $0=\lambda_1<\lambda_2\le\dots\le\lambda_N$ be the eigenvalues of $L$. Then $\delta/G$ is the smallest eigenvalue of $\diag\theta+L$, and $\theta_{\min}\le\delta/G\le\bar\theta$, where $\bar\theta$ is the mean of $\theta$. If $\theta$ is homogeneous, the critical mode is exactly $\one/\sqrt N$ and $\delta=G\theta$. In general, its angle $\phi$ to $\one$ satisfies
 \begin{equation}\label{eq:dk}
   \sin\phi\le\frac{\theta_{\max}-\theta_{\min}}{\lambda_2}.
 \end{equation}
