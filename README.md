@@ -28,6 +28,11 @@ python3 -m venv .venv && .venv/bin/pip install -r requirements.txt
 .venv/bin/python src/nonlinear_confound.py    # Sec. 4.6, full nonlinear model (~10 min)
 .venv/bin/python src/temporal_demo.py         # Sec. 4.7, delta from the global signal
 .venv/bin/python src/paper_figs_extra.py      # Figs. 6-7
+.venv/bin/python src/nonlinear_regimes.py     # Sec. 4.6, regimes across G and frequency dispersion (~10 min)
+.venv/bin/python src/regimes_analysis.py      # Fig. 6b
+.venv/bin/python src/nonnormal_check.py       # check of Corollary (directed coupling) and Proposition (left mode)
+.venv/bin/python src/recovery_delta.py        # Sec. 4.7, recovery study of delta (~5 min)
+.venv/bin/python src/recovery_figure.py       # Fig. 8
 ```
 Fitting procedures, bounds and validation splits are described in Appendix A of the paper.
 The notebooks in `notebooks/` document the exploratory phases (in Spanish).
