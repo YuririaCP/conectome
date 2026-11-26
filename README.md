@@ -33,6 +33,7 @@ python3 -m venv .venv && .venv/bin/pip install -r requirements.txt
 .venv/bin/python src/nonnormal_check.py       # check of Corollary (directed coupling) and Proposition (left mode)
 .venv/bin/python src/recovery_delta.py        # Sec. 4.7, recovery study of delta (~5 min)
 .venv/bin/python src/recovery_figure.py       # Fig. 8
+.venv/bin/python src/recovery_fast.py         # Sec. 5.2, delta up to 0.5 s^-1 with variable HRF (uses temporal_est.py)
 ```
 Fitting procedures, bounds and validation splits are described in Appendix A of the paper.
 The notebooks in `notebooks/` document the exploratory phases (in Spanish).
