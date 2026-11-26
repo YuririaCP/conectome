@@ -59,7 +59,17 @@ for i, G in enumerate(GS):
         print(f"G={G} s={s_}: halves {z1[i, j, -1]:5.1f} / {z2[i, j, -1]:5.1f}   and {z1[i, j, -2]:5.1f} / {z2[i, j, -2]:5.1f}")
 below = (s_gsr / n_gsr)[:, :, mid < 0]
 print(f"max over damped-side intervals of (change after GSR / noise): {below.max():.2f}")
-np.savez(ROOT / "results" / "regimes_summary.npz", z1=z1, z2=z2, mid=mid, s_raw=s_raw, n_raw=n_raw, s_gsr=s_gsr, n_gsr=n_gsr, SYm=SYm)
+# delete-one jackknife over realizations: standard error of (change after GSR / noise)
+zs = []
+for drop in range(K):
+    keep = [m for m in range(K) if m != drop]
+    sj, nj = change(Fg[:, :, :, keep])
+    zs.append(sj / nj)
+zs = np.array(zs)
+z_se = np.sqrt((K - 1) / K * ((zs - zs.mean(0)) ** 2).sum(0))
+zfull = s_gsr / n_gsr
+print("jackknife 90% half-width on [0.02,0.05]:", np.round(1.645 * z_se[:, :, -1], 1).tolist())
+np.savez(ROOT / "results" / "regimes_summary.npz", z_se=z_se, z1=z1, z2=z2, mid=mid, s_raw=s_raw, n_raw=n_raw, s_gsr=s_gsr, n_gsr=n_gsr, SYm=SYm)
 
 # ---------------------------------------------------------------- figure
 C = ["#2a78d6", "#eb6834", "#1baf7a"]
@@ -83,6 +93,8 @@ ax.text(-0.2, 1.04, "(a)", transform=ax.transAxes, fontsize=9, fontweight="bold"
 ax = axs[1]
 for j, s in enumerate(DISP):
     y = np.maximum(s_gsr[iG, j] / n_gsr[iG, j], 0.05)
+    e = 1.645 * z_se[iG, j]
+    ax.fill_between(mid, np.maximum(y - e, 0.05), y + e, color=C[j], alpha=0.12, lw=0)
     ax.semilogy(mid, y, "-", lw=1, color=C[j], alpha=0.6)
     ax.semilogy(mid[y >= 1], y[y >= 1], "o", ms=3.5, color=C[j], label=f"dispersion {s:g}")
     ax.semilogy(mid[y < 1], y[y < 1], "o", ms=3.5, color=C[j], mfc="white")
@@ -99,7 +111,8 @@ k = len(mid) - 1                         # interval [0.02, 0.05]
 x = np.arange(len(GS))
 wbar = 0.25
 for j, s in enumerate(DISP):
-    ax.bar(x + (j - 1) * wbar, s_gsr[:, j, k] / n_gsr[:, j, k], width=wbar * 0.9, color=C[j], label=f"dispersion {s:g}")
+    ax.bar(x + (j - 1) * wbar, s_gsr[:, j, k] / n_gsr[:, j, k], width=wbar * 0.9, color=C[j], label=f"dispersion {s:g}",
+           yerr=1.645 * z_se[:, j, k], error_kw=dict(ecolor=INK, elinewidth=0.8, capsize=2))
 ax.axhline(1, color=MUTED, lw=1, ls="--")
 ax.set_xticks(x, [f"$G={G:g}$" for G in GS])
 ax.set_ylabel("change of FC after GSR / noise")
